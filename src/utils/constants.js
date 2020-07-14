@@ -1,3 +1,10 @@
+import {
+  MdCheckCircle,
+  MdInfo,
+  MdWarning,
+  MdError,
+} from 'react-icons/md';
+
 export const NOTIFICATION_SYSTEM_STYLE = {
   NotificationItem: {
     DefaultStyle: {
@@ -127,3 +134,84 @@ export const NOTIFICATION_SYSTEM_STYLE = {
     },
   },
 };
+
+export const NOTIFICATION_OPTIONS = {
+  topCenter: {
+    info: {
+      title: MdInfo(),
+      message: '',
+      level: 'info',
+      position: 'tc'
+    },
+    success: {
+      title: MdCheckCircle(),
+      message: '',
+      level: 'success',
+      position: 'tc'
+    },
+    warning: {
+      title: MdWarning(),
+      message: '',
+      level: 'warning',
+      position: 'tc'
+    },
+    error: {
+      title: MdError(),
+      message: '',
+      level: 'error',
+      position: 'tc'
+    },
+  },
+  topRight: {
+    info: {
+      title: MdInfo(),
+      message: '',
+      level: 'info',
+      position: 'tr'
+    },
+    success: {
+      title: MdCheckCircle(),
+      message: '',
+      level: 'success',
+      position: 'tr'
+    },
+    warning: {
+      title: MdWarning(),
+      message: '',
+      level: 'warning',
+      position: 'tr'
+    },
+    error: {
+      title: MdError(),
+      message: '',
+      level: 'error',
+      position: 'tr'
+    },
+  },
+  bottomCenter: {
+    info: {
+      title: MdInfo(),
+      message: '',
+      level: 'info',
+      position: 'bc'
+    },
+    success: {
+      title: MdCheckCircle(),
+      message: '',
+      level: 'success',
+      position: 'bc'
+    },
+    warning: {
+      title: MdWarning(),
+      message: '',
+      level: 'warning',
+      position: 'bc'
+    },
+    error: {
+      title: MdError(),
+      message: '',
+      level: 'error',
+      position: 'bc'
+    },
+  },
+}

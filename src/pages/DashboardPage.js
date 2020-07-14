@@ -43,7 +43,10 @@ import {
   Row,
 } from 'reactstrap';
 import { getColor } from 'utils/colors';
+import { connect } from 'react-redux';
+import { actionNotification } from 'stores/index';
 import { fetchProfileData } from "./fakeApi";
+import { NOTIFICATION_OPTIONS } from 'utils/constants';
 
 const resource = fetchProfileData();
 
@@ -58,19 +61,23 @@ class DashboardPage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+    
+    // setTimeout(() => {
+    //   if (!this.notificationSystem) {
+    //     return;
+    //   }
 
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
+    const { error } = NOTIFICATION_OPTIONS.topRight;
+    error.message = 'walau badai menghadang tak apa!';
+    this.props.showNotification(error);
 
-      this.notificationSystem.addNotification({
-        title: '<MdLoyalty />',
-        message:
-          'baskir',
-        level: 'info',
-      });
-    }, 2500);
+    //   this.notificationSystem.addNotification({
+    //     title: '<MdLoyalty />',
+    //     message:
+    //       'baskir',
+    //     level: 'info',
+    //   });
+    // }, 2500);
   }
   
   render() {
@@ -422,4 +429,15 @@ class DashboardPage extends React.Component {
     );
   }
 }
-export default DashboardPage;
+
+const mapStateToProps = () => {
+  return {};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return { 
+    showNotification: (req) => dispatch(actionNotification.showNotification(req)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

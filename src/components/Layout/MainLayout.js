@@ -6,6 +6,7 @@ import {
   MdLoyalty,
 } from 'react-icons/md';
 import NotificationSystem from 'react-notification-system';
+import { connect } from 'react-redux';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 
 class MainLayout extends React.Component {
@@ -19,6 +20,19 @@ class MainLayout extends React.Component {
     if (breakpoint !== this.props.breakpoint) {
       this.checkBreakpoint(breakpoint);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    this.isShowNotification(prevProps);
+    if (!this.notificationSystem) {
+      return;
+    }
+
+    this.notificationSystem.addNotification({
+      title: <MdImportantDevices />,
+      message: 'Welome to Reduction backyart!',
+      level: 'info',
+    });
   }
 
   componentDidMount() {
@@ -49,8 +63,19 @@ class MainLayout extends React.Component {
     }, 2500);
   }
 
+  isShowNotification = (prevProps) => {
+    if (!this.notificationSystem) {
+      return;
+    }
+
+    if (prevProps.StoreNotification.toggle !== this.props.StoreNotification.toggle) {
+      this.notificationSystem.addNotification(this.props.StoreNotification);
+    }
+  }
+
   // close sidebar when
   handleContentClick = event => {
+    console.log(this.props, 'yayayapppp');
     // close sidebar if sidebar is open and screen size is less than `md`
     if (
       MainLayout.isSidebarOpen() &&
@@ -108,4 +133,12 @@ class MainLayout extends React.Component {
   }
 }
 
-export default MainLayout;
+const mapStateToProps = (state) => {
+  return { StoreNotification: state.StoreNotification.detail };
+}
+
+const mapDispatchToProps = () => {
+  return {};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
