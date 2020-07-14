@@ -6,7 +6,9 @@ import React from 'react';
 import PropTypes from 'utils/propTypes';
 import componentQueries from 'react-component-queries';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './styles/reduction.scss';
+
 
 const AlertPage = React.lazy(() => import('./pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('./pages/AuthModalPage'));
@@ -25,31 +27,34 @@ const TablePage = React.lazy(() => import('./pages/TablePage'));
 const TypographyPage = React.lazy(() => import('./pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('./pages/WidgetPage'));
 
+// middleware
+const AuthenticatedRoute = React.lazy(() => import('./middleware/AuthenticatedRoute'));
+const UnauthenticatedRoute = React.lazy(() => import('./middleware/UnauthenticatedRoute'));
 
 class App extends React.Component {
   render() {
+    const Layout = this.props.isAuthenticated ? MainLayout : EmptyLayout;
     return (
-        <Switch>
-          <LayoutRoute
-            exact
-            path="/login"
-            layout={EmptyLayout}
-            component={props => (
-              <AuthPage {...props} authState={STATE_LOGIN} />
-            )}
-          />
-          <LayoutRoute
-            exact
-            path="/signup"
-            layout={EmptyLayout}
-            component={props => (
-              <AuthPage {...props} authState={STATE_SIGNUP} />
-            )}
-          />
-
-          <MainLayout breakpoint={this.props.breakpoint}>
+        <Switch> 
+          <Layout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
-              <Route exact path="/" component={ () => <DashboardPage /> } />
+              <AuthenticatedRoute
+                exact
+                path="/"
+                component={ DashboardPage }
+                appProps={{
+                  isAuthenticated: this.props.isAuthenticated
+                }}
+              />
+              <LayoutRoute
+                exact
+                path="/login"
+                layout={EmptyLayout}
+                component={props => (
+                  <AuthPage {...props} authState={STATE_LOGIN} />
+                )}
+              />
+              { /* <Route exact path="/" component={ () => <DashboardPage /> } /> */ }
               <Route exact path="/login-modal" component={AuthModalPage} />
               <Route exact path="/buttons" component={ButtonPage} />
               <Route exact path="/cards" component={CardPage} />
@@ -70,7 +75,7 @@ class App extends React.Component {
               <Route exact path="/input-groups" component={InputGroupPage} />
               <Route exact path="/charts" component={ChartPage} />
             </React.Suspense>
-          </MainLayout>
+          </Layout>
           <Redirect to="/" />
         </Switch>
       
@@ -106,4 +111,14 @@ const query = ({ width }) => {
   return { breakpoint: 'xs' };
 };
 
-export default componentQueries(query)(App);
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.StoreTodo.detail,
+  };
+}
+
+const mapDispatchToProps = () => {
+  return {};
+}
+
+export default componentQueries(query)(connect(mapStateToProps, mapDispatchToProps)(App));
