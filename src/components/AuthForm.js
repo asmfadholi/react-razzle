@@ -8,8 +8,8 @@ class AuthForm extends React.Component {
     return this.props.authState === STATE_LOGIN;
   }
 
-  get isSignup() {
-    return this.props.authState === STATE_SIGNUP;
+  get isForgotPassword() {
+    return this.props.authState === STATE_FORGOT_PASSWORD;
   }
 
   changeAuthState = authState => event => {
@@ -29,8 +29,8 @@ class AuthForm extends React.Component {
       return 'Login';
     }
 
-    if (!buttonText && this.isSignup) {
-      return 'Signup';
+    if (!buttonText && this.isForgotPassword) {
+      return 'Find';
     }
 
     return buttonText;
@@ -66,22 +66,23 @@ class AuthForm extends React.Component {
           <Label for={usernameLabel}>{usernameLabel}</Label>
           <Input {...usernameInputProps} />
         </FormGroup>
-        <FormGroup>
-          <Label for={passwordLabel}>{passwordLabel}</Label>
-          <Input {...passwordInputProps} />
-        </FormGroup>
-        {this.isSignup && (
+
+        {this.isLogin && (
           <FormGroup>
-            <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
-            <Input {...confirmPasswordInputProps} />
+            <Label for={passwordLabel}>{passwordLabel}</Label>
+            <Input {...passwordInputProps} />
           </FormGroup>
         )}
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" />{' '}
-            {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
-          </Label>
-        </FormGroup>
+
+        {this.isLogin && (
+          <FormGroup check>
+            <Label check>
+              <Input type="checkbox" />{' '}
+                Remember me
+            </Label>
+          </FormGroup>
+        )}
+        
         <hr />
         <Button
           size="lg"
@@ -94,18 +95,17 @@ class AuthForm extends React.Component {
         <div className="text-center pt-1">
           <h6>or</h6>
           <h6>
-            {this.isSignup ? (
+            {this.isLogin ? (
+              <a href="#forgot-password" onClick={this.changeAuthState(STATE_FORGOT_PASSWORD)}>
+                Forgot Password?
+              </a>
+            ):(
               <a href="#login" onClick={this.changeAuthState(STATE_LOGIN)}>
                 Login
               </a>
-            ) : (
-              <a href="#signup" onClick={this.changeAuthState(STATE_SIGNUP)}>
-                Signup
-              </a>
-            )}
+            )}            
           </h6>
         </div>
-
         {children}
       </Form>
     );
@@ -113,10 +113,11 @@ class AuthForm extends React.Component {
 }
 
 export const STATE_LOGIN = 'LOGIN';
-export const STATE_SIGNUP = 'SIGNUP';
+// export const STATE_SIGNUP = 'SIGNUP';
+export const STATE_FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 
 AuthForm.propTypes = {
-  authState: PropTypes.oneOf([STATE_LOGIN, STATE_SIGNUP]).isRequired,
+  authState: PropTypes.oneOf([STATE_LOGIN, STATE_FORGOT_PASSWORD]).isRequired,
   showLogo: PropTypes.bool,
   usernameLabel: PropTypes.string,
   usernameInputProps: PropTypes.object,
@@ -130,7 +131,7 @@ AuthForm.propTypes = {
 AuthForm.defaultProps = {
   authState: 'LOGIN',
   showLogo: true,
-  usernameLabel: 'Email',
+  usernameLabel: 'Emaily',
   usernameInputProps: {
     type: 'email',
     placeholder: 'your@email.com',

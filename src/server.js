@@ -15,7 +15,7 @@ server
   .get('/*', (req, res) => {
     const context = {};
 
-    store.dispatch({ type: 'StoreTodoDETAIL_TODO', data: false });
+    store.dispatch({ type: 'StoreTodo/DETAIL_TODO', data: false });
 
     console.log(store.getState());
     

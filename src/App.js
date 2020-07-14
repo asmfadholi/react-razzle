@@ -1,5 +1,5 @@
-import { STATE_LOGIN, STATE_SIGNUP } from 'components/AuthForm';
-import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
+import { STATE_LOGIN, STATE_FORGOT_PASSWORD } from 'components/AuthForm';
+import { EmptyLayout, MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import AuthPage from 'pages/AuthPage';
 import React from 'react';
@@ -8,7 +8,6 @@ import componentQueries from 'react-component-queries';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './styles/reduction.scss';
-
 
 const AlertPage = React.lazy(() => import('./pages/AlertPage'));
 const AuthModalPage = React.lazy(() => import('./pages/AuthModalPage'));
@@ -46,13 +45,23 @@ class App extends React.Component {
                   isAuthenticated: this.props.isAuthenticated
                 }}
               />
-              <LayoutRoute
+              <UnauthenticatedRoute
                 exact
                 path="/login"
-                layout={EmptyLayout}
-                component={props => (
-                  <AuthPage {...props} authState={STATE_LOGIN} />
-                )}
+                component={ AuthPage }
+                authState={ STATE_LOGIN }
+                appProps={{
+                  isAuthenticated: this.props.isAuthenticated
+                }}
+              />
+              <UnauthenticatedRoute
+                exact
+                path="/forgot-password"
+                component={ AuthPage }
+                authState={ STATE_FORGOT_PASSWORD }
+                appProps={{
+                  isAuthenticated: this.props.isAuthenticated
+                }}
               />
               { /* <Route exact path="/" component={ () => <DashboardPage /> } /> */ }
               <Route exact path="/login-modal" component={AuthModalPage} />

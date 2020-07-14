@@ -1,6 +1,6 @@
 import preloadedState from 'utils/preloadedState';
 
-const pre = 'StoreTodo';
+const pre = 'StoreTodo/';
 
 const { StoreTodo: store = {} } = preloadedState;
 const { list, detail } = store;

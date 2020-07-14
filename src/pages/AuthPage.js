@@ -2,12 +2,34 @@ import AuthForm, { STATE_LOGIN } from 'components/AuthForm';
 import React from 'react';
 import { Card, Col, Row } from 'reactstrap';
 
+const propsForm = {
+  login: {
+    usernameLabel: 'Email',
+    usernameInputProps: {
+      type: 'email',
+      placeholder: 'your@email.com',
+    },
+  },
+  forgotPassword: {
+    usernameLabel: 'Find your email',
+    usernameInputProps: {
+      type: 'email',
+      placeholder: 'your@email.com',
+    },
+  }
+}
 class AuthPage extends React.Component {
+
+  get propsForm() {
+    const { login, forgotPassword } = propsForm;
+    return this.props.authState === STATE_LOGIN ? login : forgotPassword;
+  }
+
   handleAuthState = authState => {
     if (authState === STATE_LOGIN) {
       this.props.history.push('/login');
     } else {
-      this.props.history.push('/signup');
+      this.props.history.push('/forgot-password');
     }
   };
 
@@ -16,6 +38,7 @@ class AuthPage extends React.Component {
   };
 
   render() {
+    const { usernameLabel, usernameInputProps } = this.propsForm;
     return (
       <Row
         style={{
@@ -26,6 +49,8 @@ class AuthPage extends React.Component {
         <Col md={6} lg={4}>
           <Card body>
             <AuthForm
+              usernameLabel={usernameLabel}
+              usernameInputProps={usernameInputProps}
               authState={this.props.authState}
               onChangeAuthState={this.handleAuthState}
               onLogoClick={this.handleLogoClick}
