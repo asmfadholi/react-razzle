@@ -23,7 +23,6 @@ class MainLayout extends React.Component {
 
   componentDidMount() {
     this.checkBreakpoint(this.props.breakpoint);
-
     setTimeout(() => {
       if (!this.notificationSystem) {
         return;
