@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    plugins: ['scss'],
+    plugins: ['scss', 'workbox'],
     modify: (baseConfig, { target, dev }, webpack) => {
 
       /* make a copy of config */

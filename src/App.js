@@ -3,7 +3,7 @@ import { EmptyLayout, LayoutRoute, MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import AuthPage from 'pages/AuthPage';
 import React from 'react';
-import { PropTypes } from 'utils/propTypes';
+import PropTypes from 'utils/propTypes';
 import componentQueries from 'react-component-queries';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';

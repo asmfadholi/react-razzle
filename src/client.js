@@ -2,6 +2,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { hydrate } from 'react-dom';
+import { register } from 'razzle-plugin-workbox/service-worker';
 
 const getBasename = () => {
   return `/${process.env.RAZZLE_RUNTIME_PUBLIC_URL.split('/').pop()}`;
@@ -17,3 +18,5 @@ hydrate(
 if (module.hot) {
   module.hot.accept();
 }
+
+register();
