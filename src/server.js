@@ -1,6 +1,8 @@
 import App from './App';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
+import store from './stores/index';
+import { Provider } from 'react-redux';
 import express from 'express';
 import { renderToString } from 'react-dom/server';
 
@@ -12,11 +14,20 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
     const context = {};
+
+    store.dispatch({ type: 'StoreTodoDETAIL_TODO', data: true });
+
+    console.log(store.getState());
+    
     const markup = renderToString(
-      <StaticRouter context={context} location={req.url}>
-        <App />
-      </StaticRouter>
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.url}>
+          <App />
+        </StaticRouter>
+      </Provider>
     );
+
+    const preloadedState = store.getState()
 
     if (context.url) {
       res.redirect(context.url);
@@ -42,6 +53,14 @@ server
     </head>
     <body>
         <div id="root">${markup}</div>
+        <script>
+          // WARNING: See the following for security issues around embedding JSON in HTML:
+          // https://redux.js.org/recipes/server-rendering/#security-considerations
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+            /</g,
+            '\\u003c'
+          )}
+        </script>
     </body>
 </html>`
       );

@@ -3,15 +3,20 @@ import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { hydrate } from 'react-dom';
 import { register } from 'razzle-plugin-workbox/service-worker';
+import { Provider } from 'react-redux';
+
+import store from 'stores/index'
 
 const getBasename = () => {
   return `/${process.env.RAZZLE_RUNTIME_PUBLIC_URL.split('/').pop()}`;
 };
 
 hydrate(
-  <BrowserRouter basename={getBasename()}>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter basename={getBasename()}>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
