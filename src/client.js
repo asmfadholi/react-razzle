@@ -4,7 +4,7 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 
 const getBasename = () => {
-  return `/${process.env.PUBLIC_URL.split('/').pop()}`;
+  return `/${process.env.RAZZLE_RUNTIME_PUBLIC_URL.split('/').pop()}`;
 };
 
 hydrate(
@@ -13,8 +13,6 @@ hydrate(
   </BrowserRouter>,
   document.getElementById('root')
 );
-
-console.log(process.env.RAZZLE_RUNTIME_DAMN, 'yasss');
 
 if (module.hot) {
   module.hot.accept();
