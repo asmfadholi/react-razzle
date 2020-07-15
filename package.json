@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "razzle start",
     "build": "razzle build",
+    "heroku-postbuild": "npm run build",
     "test": "razzle test --env=jsdom",
     "start": "node build/server.js"
   },
