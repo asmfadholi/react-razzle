@@ -24,11 +24,15 @@ import {
   Nav,
   Navbar,
   NavItem,
-  NavLink,
+  NavLink as BSNavLink,
   Popover,
   PopoverBody,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
+import { NavLink } from 'react-router-dom';
+// import {
+//   NavLink as BSNavLink,
+// } from 'reactstrap';
 
 const bem = bn.create('header');
 
@@ -77,7 +81,6 @@ class Header extends React.Component {
 
   render() {
     const { isNotificationConfirmed } = this.state;
-
     return (
       <Navbar light expand className={bem.b('bg-white')}>
         <Nav navbar className="mr-2">
@@ -91,7 +94,7 @@ class Header extends React.Component {
 
         <Nav navbar className={bem.e('nav-right')}>
           <NavItem className="d-inline-flex">
-            <NavLink id="Popover1" className="position-relative">
+            <BSNavLink id="Popover1" className="position-relative">
               {isNotificationConfirmed ? (
                 <MdNotificationsNone
                   size={25}
@@ -105,7 +108,7 @@ class Header extends React.Component {
                   onClick={this.toggleNotificationPopover}
                 />
               )}
-            </NavLink>
+            </BSNavLink>
             <Popover
               placement="bottom"
               isOpen={this.state.isOpenNotificationPopover}
@@ -119,12 +122,12 @@ class Header extends React.Component {
           </NavItem>
 
           <NavItem>
-            <NavLink id="Popover2">
+            <BSNavLink id="Popover2">
               <Avatar
                 onClick={this.toggleUserCardPopover}
                 className="can-click"
               />
-            </NavLink>
+            </BSNavLink>
             <Popover
               placement="bottom-end"
               isOpen={this.state.isOpenUserCardPopover}
@@ -141,6 +144,7 @@ class Header extends React.Component {
                   className="border-light"
                 >
                   <ListGroup flush>
+                    
                     <ListGroupItem tag="button" action className="border-light">
                       <MdPersonPin /> Profile
                     </ListGroupItem>
@@ -156,9 +160,10 @@ class Header extends React.Component {
                     <ListGroupItem tag="button" action className="border-light">
                       <MdHelp /> Help
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag={NavLink} to='/logout' action className="border-light">
                       <MdExitToApp /> Signout
                     </ListGroupItem>
+                
                   </ListGroup>
                 </UserCard>
               </PopoverBody>

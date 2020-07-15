@@ -7,6 +7,8 @@ import PropTypes from 'utils/propTypes';
 import componentQueries from 'react-component-queries';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
+import NotificationSystem from 'react-notification-system';
 import './styles/reduction.scss';
 
 const AlertPage = React.lazy(() => import('./pages/AlertPage'));
@@ -25,15 +27,33 @@ const ProgressPage = React.lazy(() => import('./pages/ProgressPage'));
 const TablePage = React.lazy(() => import('./pages/TablePage'));
 const TypographyPage = React.lazy(() => import('./pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('./pages/WidgetPage'));
+const BlankPage = React.lazy(() => import('./pages/BlankPage'));
 
 // middleware
 const AuthenticatedRoute = React.lazy(() => import('./middleware/AuthenticatedRoute'));
 const UnauthenticatedRoute = React.lazy(() => import('./middleware/UnauthenticatedRoute'));
 
 class App extends React.Component {
+
+  componentDidUpdate(prevProps) {
+    this.isShowNotification(prevProps);
+    if (!this.notificationSystem) {
+      return;
+    }
+  }
+  isShowNotification = (prevProps) => {
+    if (!this.notificationSystem) {
+      return;
+    }
+
+    if (prevProps.StoreNotification.toggle !== this.props.StoreNotification.toggle) {
+      this.notificationSystem.addNotification(this.props.StoreNotification);
+    }
+  }
   render() {
     const Layout = this.props.isAuthenticated ? MainLayout : EmptyLayout;
     return (
+      <>
         <Switch> 
           <Layout breakpoint={this.props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
@@ -41,6 +61,14 @@ class App extends React.Component {
                 exact
                 path="/"
                 component={ DashboardPage }
+                appProps={{
+                  isAuthenticated: this.props.isAuthenticated
+                }}
+              />
+              <AuthenticatedRoute
+                exact
+                path="/logout"
+                component={ BlankPage }
                 appProps={{
                   isAuthenticated: this.props.isAuthenticated
                 }}
@@ -54,6 +82,7 @@ class App extends React.Component {
                   isAuthenticated: this.props.isAuthenticated
                 }}
               />
+
               <UnauthenticatedRoute
                 exact
                 path="/forgot-password"
@@ -86,8 +115,16 @@ class App extends React.Component {
             </React.Suspense>
           </Layout>
           <Redirect to="/" />
+          
         </Switch>
-      
+        <NotificationSystem
+          dismissible={false}
+          ref={notificationSystem =>
+            (this.notificationSystem = notificationSystem)
+          }
+          style={NOTIFICATION_SYSTEM_STYLE}
+        />
+      </>
     );
   }
 }
@@ -122,7 +159,8 @@ const query = ({ width }) => {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.StoreTodo.detail,
+    isAuthenticated: state.StoreAuth.isLogin.status,
+    StoreNotification: state.StoreNotification.detail,
   };
 }
 

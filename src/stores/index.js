@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import StoreTodo from './modules/StoreTodo';
-import StoreNotification, { actionNotification } from './modules/StoreNotification'; 
+import StoreNotification, { actionNotification } from './modules/StoreNotification';
+import StoreAuth, { actionAuth } from './modules/StoreAuth';
 
 let composeEnhancers = compose;
 
@@ -13,6 +14,7 @@ if (process.browser) {
 let reducers = combineReducers({
     StoreTodo,
     StoreNotification,
+    StoreAuth,
 })
 
 const store = createStore(
@@ -24,4 +26,5 @@ export default store;
 
 export {
     actionNotification,
+    actionAuth,
 };

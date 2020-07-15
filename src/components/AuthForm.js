@@ -1,9 +1,14 @@
 import logo200Image from 'assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Spinner } from 'reactstrap';
 
 class AuthForm extends React.Component {
+  state = {
+    email: 'aa',
+    password: ''
+  }
+
   get isLogin() {
     return this.props.authState === STATE_LOGIN;
   }
@@ -20,7 +25,18 @@ class AuthForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.onSubmit(this.state);
   };
+
+  onChange = (event, name) => {
+    const newValue = event.target.value;
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        [name]: newValue
+      };
+    });
+  }
 
   renderButtonText() {
     const { buttonText } = this.props;
@@ -64,13 +80,13 @@ class AuthForm extends React.Component {
         )}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} />
+          <Input {...usernameInputProps} onChange={(e) => this.onChange(e, 'email')} value={this.state.email} />
         </FormGroup>
 
         {this.isLogin && (
           <FormGroup>
             <Label for={passwordLabel}>{passwordLabel}</Label>
-            <Input {...passwordInputProps} />
+            <Input {...passwordInputProps} onChange={(e) => this.onChange(e, 'password')} value={this.state.password}/>
           </FormGroup>
         )}
 
@@ -86,10 +102,11 @@ class AuthForm extends React.Component {
         <hr />
         <Button
           size="lg"
+          disabled={this.props.isFetch}
           className="bg-gradient-theme-left border-0"
           block
           onClick={this.handleSubmit}>
-          {this.renderButtonText()}
+          { !this.props.isFetch ? this.renderButtonText() : <Spinner /> }
         </Button>
 
         <div className="text-center pt-1">

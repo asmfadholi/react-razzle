@@ -1,13 +1,13 @@
 import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
-import {
-  MdImportantDevices,
-  // MdCardGiftcard,
-  MdLoyalty,
-} from 'react-icons/md';
-import NotificationSystem from 'react-notification-system';
-import { connect } from 'react-redux';
-import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
+// import {
+//   MdImportantDevices,
+//   // MdCardGiftcard,
+//   MdLoyalty,
+// } from 'react-icons/md';
+// import NotificationSystem from 'react-notification-system';
+// import { connect } from 'react-redux';
+// import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 
 class MainLayout extends React.Component {
   static isSidebarOpen() {
@@ -22,56 +22,26 @@ class MainLayout extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    this.isShowNotification(prevProps);
-    if (!this.notificationSystem) {
-      return;
-    }
-
-    this.notificationSystem.addNotification({
-      title: <MdImportantDevices />,
-      message: 'Welome to Reduction backyart!',
-      level: 'info',
-    });
-  }
+  // componentDidUpdate(prevProps) {
+  //   this.isShowNotification(prevProps);
+  //   if (!this.notificationSystem) {
+  //     return;
+  //   }
+  // }
 
   componentDidMount() {
     this.checkBreakpoint(this.props.breakpoint);
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
-
-      this.notificationSystem.addNotification({
-        title: <MdImportantDevices />,
-        message: 'Welome to Reduction Admin!',
-        level: 'info',
-      });
-    }, 1500);
-
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
-
-      this.notificationSystem.addNotification({
-        title: <MdLoyalty />,
-        message:
-          'Reduction is carefully designed template powered by React and Bootstrap4!',
-        level: 'info',
-      });
-    }, 2500);
   }
 
-  isShowNotification = (prevProps) => {
-    if (!this.notificationSystem) {
-      return;
-    }
+  // isShowNotification = (prevProps) => {
+  //   if (!this.notificationSystem) {
+  //     return;
+  //   }
 
-    if (prevProps.StoreNotification.toggle !== this.props.StoreNotification.toggle) {
-      this.notificationSystem.addNotification(this.props.StoreNotification);
-    }
-  }
+  //   if (prevProps.StoreNotification.toggle !== this.props.StoreNotification.toggle) {
+  //     this.notificationSystem.addNotification(this.props.StoreNotification);
+  //   }
+  // }
 
   // close sidebar when
   handleContentClick = event => {
@@ -120,24 +90,25 @@ class MainLayout extends React.Component {
           <Footer />
         </Content>
 
-        <NotificationSystem
+        { /*<NotificationSystem
           dismissible={false}
           ref={notificationSystem =>
             (this.notificationSystem = notificationSystem)
           }
           style={NOTIFICATION_SYSTEM_STYLE}
-        />
+        /> */ }
       </main>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return { StoreNotification: state.StoreNotification.detail };
-}
+// const mapStateToProps = (state) => {
+//   return { StoreNotification: state.StoreNotification.detail };
+// }
 
-const mapDispatchToProps = () => {
-  return {};
-}
+// const mapDispatchToProps = () => {
+//   return {};
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+// export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+export default MainLayout;

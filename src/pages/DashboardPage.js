@@ -67,9 +67,9 @@ class DashboardPage extends React.Component {
     //     return;
     //   }
 
-    const { error } = NOTIFICATION_OPTIONS.topRight;
-    error.message = 'walau badai menghadang tak apa!';
-    this.props.showNotification(error);
+    // const { error } = NOTIFICATION_OPTIONS.topRight;
+    // error.message = 'walau badai menghadang tak apa!';
+    // this.props.showNotification(error);
 
     //   this.notificationSystem.addNotification({
     //     title: '<MdLoyalty />',
@@ -116,7 +116,6 @@ class DashboardPage extends React.Component {
               }}
             />
           </Col>
-            {user.name} lala
           <Col lg={3} md={6} sm={6} xs={12}>
             <NumberWidget
               title="New Users"
