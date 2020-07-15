@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "serve": "razzle start",
-    "postinstall": "npm run build",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
     "start": "node build/server.js"
