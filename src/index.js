@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import http from 'http';
 
 let app = require('./server').default;
@@ -8,7 +10,7 @@ let currentApp = app;
 
 server
   .listen(process.env.PORT || 3000, () => {
-    console.log('🚀 started');
+    console.log('🚀 started' + process.env.PORT);
   })
   .on('error', error => {
     console.log(error);
