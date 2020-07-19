@@ -10,7 +10,7 @@ let currentApp = app;
 
 server
   .listen(process.env.PORT || 3000, () => {
-    console.log('🚀 started' + process.env.PORT);
+    console.log('🚀 started');
   })
   .on('error', error => {
     console.log(error);
