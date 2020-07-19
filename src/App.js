@@ -28,7 +28,7 @@ const TablePage = React.lazy(() => import('./pages/TablePage'));
 const TypographyPage = React.lazy(() => import('./pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('./pages/WidgetPage'));
 const BlankPage = React.lazy(() => import('./pages/BlankPage'));
-const OrgChartPage = React.lazy(() => import('./pages/OrgChartPage'));
+const OrgChartPage = React.lazy(() => import('./pages/OrgchartPage'));
 
 // middleware
 const AuthenticatedRoute = React.lazy(() => import('./middleware/AuthenticatedRoute'));
