@@ -10,6 +10,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
+    "@unicef/react-org-chart": "^0.3.4",
     "axios": "^0.19.2",
     "bootstrap": "4.3.1",
     "chart.js": "2.7.2",
