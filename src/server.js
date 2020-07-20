@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import App from './App';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
