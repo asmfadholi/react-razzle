@@ -21,7 +21,7 @@ server.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === 'production' }
+  cookie: { secure: false, httpOnly: true }
 }))
 
 server.post('/user/login', ({session}, res) => {
