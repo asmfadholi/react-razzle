@@ -2,11 +2,11 @@ import React from 'react';
 import OrgChart from '@unicef/react-org-chart';
 import {
   Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
+  // ButtonGroup,
+  // Card,
+  // CardBody,
+  // CardHeader,
+  // Col,
   Label,
   Input,
   FormGroup,
@@ -15,7 +15,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Row,
+  // Row,
 } from 'reactstrap';
 import { tree } from 'assets/orgchart-data/Tree';
 import avatarPersonnel from 'assets/img/users/avatar-personnel.svg';
@@ -31,92 +31,91 @@ const initData = {
 };
 
 class OrgchartPage extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
+    state = {
       actionData: 'delete',
       modal: false,
       modal_parent: false,
       modal_nested: false,
       currentData: initData,
       temporaryData: initData,
-      tree: tree,
+      tree,
       downloadingChart: false,
       config: {},
       highlightPostNumbers: [1],
-    }
-  }
+    };
 
-  toggle = modalType => () => {
+  toggle = (modalType) => () => {
     if (!modalType) {
-      return this.setState({
-        modal: !this.state.modal,
-      });
+      return this.setState((prevState) => ({
+        modal: !prevState.modal,
+      }));
     }
 
-    this.setState({
-      [`modal_${modalType}`]: !this.state[`modal_${modalType}`],
-    });
+    this.setState((prevState) => ({
+      [`modal_${modalType}`]: !prevState[`modal_${modalType}`],
+    }));
+    return null;
+    // if (!modalType) {
+    //   return this.setState({
+    //     modal: !this.state.modal,
+    //   });
+    // }
+
+    // this.setState({
+    //   [`modal_${modalType}`]: !this.state[`modal_${modalType}`],
+    // });
   }
 
-  getChild = (id) => {
-    return id;
-  }
+  getChild = (id) => id
 
-  getParent = d => {
-    return d;
-  }
+  getParent = (d) => d
 
   handleDownload = () => {
-    this.setState({ downloadingChart: false })
+    this.setState({ downloadingChart: false });
   }
 
   handlePerson = (e, d) => {
     // e.person.name = 'iket';
     const { target } = d;
     const { nodeName } = target;
-    
-      if (nodeName !== 'text') {
-        // e.person.title = 'asdasdasd loker';
-        if (!e.children) {
-          const children = e._children || [];
-          e.children = children;
-        } else {
-          const children = e.children;
-          e._children = children;
-          e.children = null;
-          // const children = e._children || [];
-          // e.children = children;
-        }
-        this.setState((prevState) => {
-          return {
-            ...prevState,
-            currentData: { person: { ...e.person } },
-            temporaryData: e
-          }
-        });
-        this.toggle('parent')();
-        return true;
+
+    if (nodeName !== 'text') {
+      // e.person.title = 'asdasdasd loker';
+      if (!e.children) {
+        const children = e._children || [];
+        e.children = children;
+      } else {
+        const { children } = e;
+        e._children = children;
+        e.children = null;
+        // const children = e._children || [];
+        // e.children = children;
       }
-      
+      this.setState((prevState) => ({
+        ...prevState,
+        currentData: { person: { ...e.person } },
+        temporaryData: e,
+      }));
+      this.toggle('parent')();
       return true;
-    
-    
-    
+    }
+
+    return true;
+
     // e.person.title = 'asdasdasd loker';
     // if (!e.children) {
     //   const children = e._children || [];
     //   e.children = children;
     // }
     // this.toggle()();
-    
   }
 
   saveData = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const { name, title } = prevState.currentData.person;
+      // eslint-disable-next-line
       prevState.temporaryData.person.name = name;
+      // eslint-disable-next-line
       prevState.temporaryData.person.title = title;
       return {
         ...prevState,
@@ -127,12 +126,13 @@ class OrgchartPage extends React.Component {
   }
 
   deleteData = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       // const { name, title } = prevState.currentData.person;
       prevState.temporaryData.parent.children.forEach((data, index) => {
         if (data.person.id === prevState.currentData.person.id) {
           prevState.temporaryData.parent.children.splice(index, 1);
-          prevState.temporaryData.parent.person.totalReports--; 
+          // eslint-disable-next-line
+          prevState.temporaryData.parent.person.totalReports--;
         }
       });
       // prevState.temporaryData.person.title = title;
@@ -153,107 +153,113 @@ class OrgchartPage extends React.Component {
   //   element.children[3].innerHTML = title;
   // }
 
-  handleOnChangeConfig = config => {
+  handleOnChangeConfig = (config) => {
     // console.log('jess', config);
-    this.setState({ config: config })
+    this.setState({ config });
   }
 
   onChange = (event, name) => {
     const newValue = event.target.value;
     if (newValue.length < 25) {
-      this.setState(prevState => {
+      this.setState((prevState) => {
+        // eslint-disable-next-line
         prevState.currentData.person[name] = newValue;
         return {
           ...prevState,
         };
       });
     } else {
-      this.setState(prevState => {
-        return {
-          ...prevState,
-        };
-      });
+      this.setState((prevState) => ({
+        ...prevState,
+      }));
     }
-    
   }
 
   handleLoadConfig = () => {
-    const { config } = this.state
-    return config
+    const { config } = this.state;
+    return config;
   }
 
   confirmAction = (action) => () => {
-    this.setState((preState) => {
-      return {
-        ...preState,
-        modeData: action,
-      }
-    });
+    this.setState((preState) => ({
+      ...preState,
+      modeData: action,
+    }));
     this.toggle('nested')();
   }
 
   render() {
-    const { tree, downloadingChart, modal_parent, modal_nested, modeData } = this.state
+    const {
+      // eslint-disable-next-line
+      tree, downloadingChart, modal_parent, modal_nested, modeData,
+    } = this.state;
     // const yes = false;
-    //For downloading org chart as image or pdf based on id
-    const downloadImageId = 'download-image'
-    const downloadPdfId = 'download-pdf'
-    
+    // For downloading org chart as image or pdf based on id
+    const downloadImageId = 'download-image';
+    const downloadPdfId = 'download-pdf';
+
     return (
       <>
         <div className="zoom-buttons">
           <button
+            type="button"
             className="btn btn-outline-primary zoom-button"
             id="zoom-in"
           >
             +
           </button>
           <button
+            type="button"
             className="btn btn-outline-primary zoom-button"
             id="zoom-out"
           >
             -
           </button>
         </div>
-        { !modal_parent && <OrgChart
+        {/* eslint-disable-next-line */}
+        { !modal_parent && (
+        <OrgChart
           tree={tree}
           downloadImageId={downloadImageId}
           downloadPdfId={downloadPdfId}
-          onConfigChange={config => {
-            this.handleOnChangeConfig(config)
+          onConfigChange={(config) => {
+            this.handleOnChangeConfig(config);
           }}
-          loadConfig={d => {
-            let configuration = this.handleLoadConfig(d)
+          loadConfig={(d) => {
+            const configuration = this.handleLoadConfig(d);
             if (configuration) {
-              return configuration
+              return configuration;
             }
+            return null;
           }}
           onPersonClick={(d, check) => {
-            let configuration = this.handlePerson(d, check)
+            const configuration = this.handlePerson(d, check);
             if (configuration) {
-              return configuration
+              return configuration;
             }
+            return null;
           }}
-          downlowdedOrgChart={d => {
-            this.handleDownload()
+          downlowdedOrgChart={(d) => {
+            this.handleDownload(d);
           }}
-          loadImage={d => {
-            return Promise.resolve(avatarPersonnel)
+          loadImage={() => Promise.resolve(avatarPersonnel)}
+          loadParent={(d) => {
+            const parentData = this.getParent(d);
+            return parentData;
           }}
-          loadParent={d => {
-            const parentData = this.getParent(d)
-            return parentData
+          loadChildren={(d) => {
+            const childrenData = this.getChild(d.id);
+            return childrenData;
           }}
-          loadChildren={d => {
-            const childrenData = this.getChild(d.id)
-            return childrenData
-          }}
-        /> }
-        
+        />
+        ) }
+
         <Modal
+          {/* eslint-disable-next-line */}
           isOpen={modal_parent}
           toggle={this.toggle('parent')}
-          className={this.props.className}>
+          className={this.props.className}
+        >
           <ModalHeader toggle={this.toggle('parent')}>Detail profile</ModalHeader>
           <ModalBody>
             <Form>
@@ -263,7 +269,7 @@ class OrgchartPage extends React.Component {
                   type="text"
                   name="email"
                   onChange={(e) => this.onChange(e, 'name')}
-                  value={ this.state.currentData.person.name }
+                  value={this.state.currentData.person.name}
                   placeholder="Name"
                 />
               </FormGroup>
@@ -273,7 +279,7 @@ class OrgchartPage extends React.Component {
                   type="text"
                   name="title"
                   onChange={(e) => this.onChange(e, 'title')}
-                  value={ this.state.currentData.person.title }
+                  value={this.state.currentData.person.title}
                   placeholder="Jabatan"
                 />
               </FormGroup>
@@ -281,34 +287,46 @@ class OrgchartPage extends React.Component {
 
             <Modal
               isOpen={modal_nested}
-              toggle={this.toggle('nested')}>
-              <ModalHeader>Are you sure to {modeData} profile data?</ModalHeader>
+              toggle={this.toggle('nested')}
+            >
+              <ModalHeader>
+                Are you sure to
+                {' '}
+                {modeData}
+                {' '}
+                profile data?
+              </ModalHeader>
               <ModalFooter>
                 <Button color="primary" onClick={this.toggle('nested')}>
                   Cancel
-                </Button>{' '}
+                </Button>
+                {' '}
                 <Button
                   color="secondary"
-                  onClick={modeData === 'Delete' ? this.deleteData : this.saveData}>
+                  onClick={modeData === 'Delete' ? this.deleteData : this.saveData}
+                >
                   Yes
                 </Button>
               </ModalFooter>
             </Modal>
-            
+
           </ModalBody>
           <ModalFooter>
-            
-            { this.state.temporaryData.hasParent && <Button color="danger" onClick={this.confirmAction('Delete')}>
+
+            { this.state.temporaryData.hasParent && (
+            <Button color="danger" onClick={this.confirmAction('Delete')}>
               Delete
-            </Button> }
-          
+            </Button>
+            ) }
+
             <Button color="primary" onClick={this.confirmAction('Edit')}>
               Save
-            </Button>{' '}
+            </Button>
+            {' '}
             <Button color="secondary" onClick={this.toggle('parent')}>
               Cancel
             </Button>
-              
+
           </ModalFooter>
         </Modal>
       </>

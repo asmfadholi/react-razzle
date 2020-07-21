@@ -21,16 +21,28 @@ class ButtonPage extends React.Component {
   };
 
   onCheckboxBtnClick(selected) {
-    const index = this.state.cSelected.indexOf(selected);
-    if (index < 0) {
-      this.state.cSelected.push(selected);
-    } else {
-      this.state.cSelected.splice(index, 1);
-    }
-    this.setState({ cSelected: [...this.state.cSelected] });
+    this.setState((prevState) => {
+      const index = prevState.cSelected.indexOf(selected);
+      if (index < 0) {
+        prevState.cSelected.push(selected);
+      } else {
+        prevState.cSelected.splice(index, 1);
+      }
+      return {
+        ...prevState,
+      };
+    });
+    // const index = state.cSelected.indexOf(selected);
+    // if (index < 0) {
+    //   state.cSelected.push(selected);
+    // } else {
+    //   state.cSelected.splice(index, 1);
+    // }
+    // this.setState({ cSelected: [...state.cSelected] });
   }
 
   render() {
+    const { state } = this;
     return (
       <Page
         className="ButtonPage"
@@ -344,26 +356,30 @@ class ButtonPage extends React.Component {
                   <Button
                     color="primary"
                     onClick={() => this.setState({ rSelected: 1 })}
-                    active={this.state.rSelected === 1}
+                    active={state.rSelected === 1}
                   >
                     One
                   </Button>
                   <Button
                     color="primary"
                     onClick={() => this.setState({ rSelected: 2 })}
-                    active={this.state.rSelected === 2}
+                    active={state.rSelected === 2}
                   >
                     Two
                   </Button>
                   <Button
                     color="primary"
                     onClick={() => this.setState({ rSelected: 3 })}
-                    active={this.state.rSelected === 3}
+                    active={state.rSelected === 3}
                   >
                     Three
                   </Button>
                 </ButtonGroup>
-                <CardText>Selected: {this.state.rSelected}</CardText>
+                <CardText>
+                  Selected:
+                  {' '}
+                  {state.rSelected}
+                </CardText>
               </CardBody>
               <CardBody>
                 <CardSubtitle>Checkbox Buttons</CardSubtitle>
@@ -371,27 +387,29 @@ class ButtonPage extends React.Component {
                   <Button
                     color="primary"
                     onClick={() => this.onCheckboxBtnClick(1)}
-                    active={this.state.cSelected.includes(1)}
+                    active={state.cSelected.includes(1)}
                   >
                     One
                   </Button>
                   <Button
                     color="primary"
                     onClick={() => this.onCheckboxBtnClick(2)}
-                    active={this.state.cSelected.includes(2)}
+                    active={state.cSelected.includes(2)}
                   >
                     Two
                   </Button>
                   <Button
                     color="primary"
                     onClick={() => this.onCheckboxBtnClick(3)}
-                    active={this.state.cSelected.includes(3)}
+                    active={state.cSelected.includes(3)}
                   >
                     Three
                   </Button>
                 </ButtonGroup>
                 <CardText>
-                  Selected: {JSON.stringify(this.state.cSelected)}
+                  Selected:
+                  {' '}
+                  {JSON.stringify(state.cSelected)}
                 </CardText>
               </CardBody>
             </Card>

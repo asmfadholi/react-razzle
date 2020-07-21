@@ -141,25 +141,25 @@ export const NOTIFICATION_OPTIONS = {
       title: MdInfo(),
       message: '',
       level: 'info',
-      position: 'tc'
+      position: 'tc',
     },
     success: {
       title: MdCheckCircle(),
       message: '',
       level: 'success',
-      position: 'tc'
+      position: 'tc',
     },
     warning: {
       title: MdWarning(),
       message: '',
       level: 'warning',
-      position: 'tc'
+      position: 'tc',
     },
     error: {
       title: MdError(),
       message: '',
       level: 'error',
-      position: 'tc'
+      position: 'tc',
     },
   },
   topRight: {
@@ -167,25 +167,25 @@ export const NOTIFICATION_OPTIONS = {
       title: MdInfo(),
       message: '',
       level: 'info',
-      position: 'tr'
+      position: 'tr',
     },
     success: {
       title: MdCheckCircle(),
       message: '',
       level: 'success',
-      position: 'tr'
+      position: 'tr',
     },
     warning: {
       title: MdWarning(),
       message: '',
       level: 'warning',
-      position: 'tr'
+      position: 'tr',
     },
     error: {
       title: MdError(),
       message: '',
       level: 'error',
-      position: 'tr'
+      position: 'tr',
     },
   },
   bottomCenter: {
@@ -193,25 +193,25 @@ export const NOTIFICATION_OPTIONS = {
       title: MdInfo(),
       message: '',
       level: 'info',
-      position: 'bc'
+      position: 'bc',
     },
     success: {
       title: MdCheckCircle(),
       message: '',
       level: 'success',
-      position: 'bc'
+      position: 'bc',
     },
     warning: {
       title: MdWarning(),
       message: '',
       level: 'warning',
-      position: 'bc'
+      position: 'bc',
     },
     error: {
       title: MdError(),
       message: '',
       level: 'error',
-      position: 'bc'
+      position: 'bc',
     },
   },
-}
+};

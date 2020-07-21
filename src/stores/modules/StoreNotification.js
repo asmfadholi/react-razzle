@@ -1,5 +1,3 @@
-
-
 const pre = 'StoreNotification/';
 
 const initState = {
@@ -7,23 +5,23 @@ const initState = {
     toggle: false,
     title: 'Info',
     message: 'Check info!',
-    level: 'info'
-  }
+    level: 'info',
+  },
 };
 
 export default function StoreNotification(state = initState, action) {
   switch (action.type) {
-    case pre + 'TOGGLE_NOTIFICATION':
-      return { ...state, detail: { toggle: !state.detail.toggle, ...action.data }};
+    case `${pre}TOGGLE_NOTIFICATION`:
+      return { ...state, detail: { toggle: !state.detail.toggle, ...action.data } };
     default:
-      return state
+      return state;
   }
-};
+}
 
 export const actionNotification = {
   showNotification(data) {
     return {
-      type: pre + 'TOGGLE_NOTIFICATION',
+      type: `${pre}TOGGLE_NOTIFICATION`,
       data,
     };
   },

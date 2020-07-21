@@ -152,22 +152,22 @@ export const chartjs = {
 
 export const chartJsGradient = {
   line1Props: {
-    data: canvas => {
+    data: (canvas) => {
       const ctx = canvas.getContext('2d');
-      let gradient = ctx.createLinearGradient(0, 0, 0, 240);
+      const gradient = ctx.createLinearGradient(0, 0, 0, 240);
       gradient.addColorStop(
         0,
         ChartJS.helpers
           .color('#00c5dc')
           .alpha(0.7)
-          .rgbString()
+          .rgbString(),
       );
       gradient.addColorStop(
         1,
         ChartJS.helpers
           .color('#f2feff')
           .alpha(0)
-          .rgbString()
+          .rgbString(),
       );
 
       return {
@@ -227,7 +227,7 @@ export const chartJsGradient = {
               .alpha(0.2)
               .rgbString(),
 
-            //fill: 'start',
+            // fill: 'start',
             data: [
               20,
               10,

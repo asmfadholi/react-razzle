@@ -19,36 +19,34 @@ const SupportTicket = ({
   status,
   onClick,
   ...restProps
-}) => {
-  return (
-    <div {...restProps}>
-      <Media className="m-2">
-        <Media left className="mr-2">
-          <Avatar src={avatar} />
-        </Media>
-        <Media body>
-          <Media heading tag="h6" className="m-0">
-            {name}
-          </Media>
-          <p className="text-muted m-0">
-            <small>{date}</small>
-          </p>
-        </Media>
-        <Media right className="align-self-center">
-          <Button
-            color="link"
-            className={`text-capitalize text-${statusMap[status]}`}
-          >
-            {status}
-          </Button>
-        </Media>
+}) => (
+  <div {...restProps}>
+    <Media className="m-2">
+      <Media left className="mr-2">
+        <Avatar src={avatar} />
       </Media>
-      <Media>
-        <p className="text-muted">{text}</p>
+      <Media body>
+        <Media heading tag="h6" className="m-0">
+          {name}
+        </Media>
+        <p className="text-muted m-0">
+          <small>{date}</small>
+        </p>
       </Media>
-    </div>
-  );
-};
+      <Media right className="align-self-center">
+        <Button
+          color="link"
+          className={`text-capitalize text-${statusMap[status]}`}
+        >
+          {status}
+        </Button>
+      </Media>
+    </Media>
+    <Media>
+      <p className="text-muted">{text}</p>
+    </Media>
+  </div>
+);
 
 SupportTicket.propTypes = {
   avatar: PropTypes.string,

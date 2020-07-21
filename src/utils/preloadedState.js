@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 let preloadedState = {};
 
 if (process.browser) {

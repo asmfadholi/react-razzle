@@ -12,32 +12,35 @@ const AvatarWithBadge = withBadge({
   color: 'success',
 })(Avatar);
 
-const UserProgressTable = ({ headers, usersData, ...restProps }) => {
-  return (
-    <Table responsive hover {...restProps}>
-      <thead>
-        <tr className="text-capitalize align-middle text-center">
-          {headers.map((item, index) => <th key={index}>{item}</th>)}
+const UserProgressTable = ({ headers, usersData, ...restProps }) => (
+  <Table responsive hover {...restProps}>
+    <thead>
+      <tr className="text-capitalize align-middle text-center">
+        {headers.map((item, index) => <th key={index}>{item}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {usersData.map(({
+        avatar, name, date, progress,
+      }, index) => (
+        <tr key={index}>
+          <td className="align-middle text-center">
+            <AvatarWithBadge src={avatar} />
+          </td>
+          <td className="align-middle text-center">{name}</td>
+          <td className="align-middle text-center">{date}</td>
+          <td className="align-middle text-center">
+            <Progress value={progress} style={{ height: 5 }} />
+          </td>
+          <td className="align-middle text-center">
+            {progress}
+            %
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {usersData.map(({ avatar, name, date, progress }, index) => (
-          <tr key={index}>
-            <td className="align-middle text-center">
-              <AvatarWithBadge src={avatar} />
-            </td>
-            <td className="align-middle text-center">{name}</td>
-            <td className="align-middle text-center">{date}</td>
-            <td className="align-middle text-center">
-              <Progress value={progress} style={{ height: 5 }} />
-            </td>
-            <td className="align-middle text-center">{progress}%</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-  );
-};
+      ))}
+    </tbody>
+  </Table>
+);
 
 UserProgressTable.propTypes = {
   headers: PropTypes.node,
@@ -46,7 +49,7 @@ UserProgressTable.propTypes = {
       avatar: PropTypes.string,
       name: PropTypes.string,
       date: PropTypes.date,
-    })
+    }),
   ),
 };
 

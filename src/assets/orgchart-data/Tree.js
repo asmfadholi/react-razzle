@@ -47,7 +47,7 @@ export const tree1 = [
     hasParent: true,
     // children: [],
   },
-]
+];
 
 export const tree = {
   id: 100,
@@ -77,7 +77,7 @@ export const tree = {
       hasChild: false,
       hasParent: true,
       children: [
-        
+
       ],
     },
     {
@@ -125,7 +125,7 @@ export const tree = {
       children: [],
     },
   ],
-}
+};
 
 export const tree2 = [
   {
@@ -203,7 +203,7 @@ export const tree2 = [
     hasParent: true,
     children: [],
   },
-]
+];
 
 export const tree3 = [
   {
@@ -234,7 +234,7 @@ export const tree3 = [
     hasParent: true,
     children: [],
   },
-]
+];
 
 export const tree4 = [
   {
@@ -294,4 +294,4 @@ export const tree4 = [
   //   hasParent: true,
   //   children: [],
   // },
-]
+];

@@ -3,27 +3,23 @@ import { connect } from 'react-redux';
 import { actionAuth } from 'stores/index';
 
 class BlankPage extends React.Component {
-
   componentDidMount() {
-    this.props.history.push('/');
-    this.props.requestLogout();
+    const { props } = this;
+    props.history.push('/');
+    props.requestLogout();
   }
 
   render() {
     return (
-      <div></div>
+      <div />
     );
   }
 }
 
-const mapStateToProps = () => {
-  return {};
-}
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => {
-  return { 
-    requestLogout: (props) => dispatch(actionAuth.requestLogout(props)),
-  };
-}
+const mapDispatchToProps = (dispatch) => ({
+  requestLogout: (props) => dispatch(actionAuth.requestLogout(props)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlankPage);

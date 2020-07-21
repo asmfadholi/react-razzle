@@ -27,13 +27,13 @@ const Page = ({
             {title}
           </Typography>
         ) : (
-            title
-          )}
+          title
+        )}
         {breadcrumbs && (
           <Breadcrumb className={bem.e('breadcrumb')}>
             <BreadcrumbItem>Home</BreadcrumbItem>
-            {breadcrumbs.length &&
-              breadcrumbs.map(({ name, active }, index) => (
+            {breadcrumbs.length
+              && breadcrumbs.map(({ name, active }, index) => (
                 <BreadcrumbItem key={index} active={active}>
                   {name}
                 </BreadcrumbItem>
@@ -55,7 +55,7 @@ Page.propTypes = {
     PropTypes.shape({
       name: PropTypes.string,
       active: PropTypes.bool,
-    })
+    }),
   ),
 };
 

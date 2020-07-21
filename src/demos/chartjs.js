@@ -1,22 +1,22 @@
 import ChartJS from 'chart.js';
 import { getColor } from 'utils/colors';
 
-export const getStackLineChart = ({ labels, data }) => canvas => {
+export const getStackLineChart = ({ labels, data }) => (canvas) => {
   const ctx = canvas.getContext('2d');
-  let gradient = ctx.createLinearGradient(0, 0, 0, 240);
+  const gradient = ctx.createLinearGradient(0, 0, 0, 240);
   gradient.addColorStop(
     0,
     ChartJS.helpers
       .color('#00c9ff')
       .alpha(1)
-      .rgbString()
+      .rgbString(),
   );
   gradient.addColorStop(
     1,
     ChartJS.helpers
       .color('#00c9ff')
       .alpha(0.2)
-      .rgbString()
+      .rgbString(),
   );
 
   return {

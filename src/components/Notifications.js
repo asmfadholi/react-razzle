@@ -5,11 +5,12 @@ import { Media } from 'reactstrap';
 
 import Avatar from 'components/Avatar';
 
-const Notifications = ({ notificationsData }) => {
-  return (
-    notificationsData &&
-    notificationsData.length &&
-    notificationsData.map(({ id, avatar, message, date }) => (
+const Notifications = ({ notificationsData }) => (
+  notificationsData
+    && notificationsData.length
+    && notificationsData.map(({
+      id, avatar, message, date,
+    }) => (
       <Media key={id} className="pb-2">
         <Media left className="align-self-center pr-3">
           <Avatar tag={Media} object src={avatar} alt="Avatar" />
@@ -22,8 +23,7 @@ const Notifications = ({ notificationsData }) => {
         </Media>
       </Media>
     ))
-  );
-};
+);
 
 Notifications.propTypes = {
   notificationsData: PropTypes.arrayOf(
@@ -32,7 +32,7 @@ Notifications.propTypes = {
       avatar: PropTypes.string,
       message: PropTypes.node,
       date: PropTypes.date,
-    })
+    }),
   ),
 };
 

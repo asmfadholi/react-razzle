@@ -23,19 +23,21 @@ class ModalPage extends React.Component {
     backdrop: true,
   };
 
-  toggle = modalType => () => {
+  toggle = (modalType) => () => {
     if (!modalType) {
-      return this.setState({
-        modal: !this.state.modal,
-      });
+      return this.setState((prevState) => ({
+        modal: !prevState.modal,
+      }));
     }
 
-    this.setState({
-      [`modal_${modalType}`]: !this.state[`modal_${modalType}`],
-    });
+    this.setState((prevState) => ({
+      [`modal_${modalType}`]: !prevState[`modal_${modalType}`],
+    }));
+    return null;
   };
 
   render() {
+    const { state, props } = this;
     return (
       <Page title="Modals" breadcrumbs={[{ name: 'modals', active: true }]}>
         <Row>
@@ -45,9 +47,10 @@ class ModalPage extends React.Component {
               <CardBody>
                 <Button onClick={this.toggle()}>Launch Modal</Button>
                 <Modal
-                  isOpen={this.state.modal}
+                  isOpen={state.modal}
                   toggle={this.toggle()}
-                  className={this.props.className}>
+                  className={props.className}
+                >
                   <ModalHeader toggle={this.toggle()}>Modal title</ModalHeader>
                   <ModalBody>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit,
@@ -62,7 +65,8 @@ class ModalPage extends React.Component {
                   <ModalFooter>
                     <Button color="primary" onClick={this.toggle()}>
                       Do Something
-                    </Button>{' '}
+                    </Button>
+                    {' '}
                     <Button color="secondary" onClick={this.toggle()}>
                       Cancel
                     </Button>
@@ -80,30 +84,38 @@ class ModalPage extends React.Component {
                   <Button
                     onClick={() => this.setState({ backdrop: true })}
                     color="primary"
-                    active={this.state.backdrop}>
+                    active={state.backdrop}
+                  >
                     true
                   </Button>
                   <Button
                     onClick={() => this.setState({ backdrop: false })}
                     color="primary"
-                    active={!this.state.backdrop}>
+                    active={!state.backdrop}
+                  >
                     false
                   </Button>
                   <Button
                     onClick={() => this.setState({ backdrop: 'static' })}
                     color="primary"
-                    active={this.state.backdrop === 'static'}>
+                    active={state.backdrop === 'static'}
+                  >
                     static
                   </Button>
                 </ButtonGroup>
               </CardHeader>
               <CardBody>
-                <p>Backdrop state: {`${this.state.backdrop}`}</p>
+                <p>
+                  Backdrop state:
+                  {' '}
+                  {`${state.backdrop}`}
+                </p>
                 <Button onClick={this.toggle('backdrop')}>Launch Modal</Button>
                 <Modal
-                  isOpen={this.state.modal_backdrop}
+                  isOpen={state.modal_backdrop}
                   toggle={this.toggle('backdrop')}
-                  backdrop={this.state.backdrop}>
+                  backdrop={state.backdrop}
+                >
                   <ModalHeader toggle={this.toggle('backdrop')}>
                     Modal title
                   </ModalHeader>
@@ -120,7 +132,8 @@ class ModalPage extends React.Component {
                   <ModalFooter>
                     <Button color="primary" onClick={this.toggle('backdrop')}>
                       Do Something
-                    </Button>{' '}
+                    </Button>
+                    {' '}
                     <Button color="secondary" onClick={this.toggle('backdrop')}>
                       Cancel
                     </Button>
@@ -138,9 +151,10 @@ class ModalPage extends React.Component {
                   Launch Modal
                 </Button>
                 <Modal
-                  isOpen={this.state.modal_nested_parent}
+                  isOpen={state.modal_nested_parent}
                   toggle={this.toggle('nested_parent')}
-                  className={this.props.className}>
+                  className={props.className}
+                >
                   <ModalHeader toggle={this.toggle('nested_parent')}>
                     Modal title
                   </ModalHeader>
@@ -158,17 +172,20 @@ class ModalPage extends React.Component {
                       Show Nested Model
                     </Button>
                     <Modal
-                      isOpen={this.state.modal_nested}
-                      toggle={this.toggle('nested')}>
+                      isOpen={state.modal_nested}
+                      toggle={this.toggle('nested')}
+                    >
                       <ModalHeader>Nested Modal title</ModalHeader>
                       <ModalBody>Stuff and things</ModalBody>
                       <ModalFooter>
                         <Button color="primary" onClick={this.toggle('nested')}>
                           Done
-                        </Button>{' '}
+                        </Button>
+                        {' '}
                         <Button
                           color="secondary"
-                          onClick={this.toggle('nested_parent')}>
+                          onClick={this.toggle('nested_parent')}
+                        >
                           All Done
                         </Button>
                       </ModalFooter>
@@ -177,12 +194,15 @@ class ModalPage extends React.Component {
                   <ModalFooter>
                     <Button
                       color="primary"
-                      onClick={this.toggle('nested_parent')}>
+                      onClick={this.toggle('nested_parent')}
+                    >
                       Do Something
-                    </Button>{' '}
+                    </Button>
+                    {' '}
                     <Button
                       color="secondary"
-                      onClick={this.toggle('nested_parent')}>
+                      onClick={this.toggle('nested_parent')}
+                    >
                       Cancel
                     </Button>
                   </ModalFooter>

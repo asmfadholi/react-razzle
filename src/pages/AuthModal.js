@@ -9,32 +9,35 @@ class AuthModal extends React.Component {
   };
 
   toggle = () => {
-    this.setState({
-      show: !this.state.show,
-    });
+    this.setState((prevState) => ({
+      ...prevState,
+      show: !prevState.show,
+    }));
   };
 
-  handleAuthState = authState => {
+  handleAuthState = (authState) => {
     this.setState({
       authState,
     });
   };
 
   render() {
+    const { state } = this;
     return (
       <div>
         <Button color="danger" onClick={this.toggle}>
           Login
         </Button>
         <Modal
-          isOpen={this.state.show}
+          isOpen={state.show}
           toggle={this.toggle}
           size="sm"
           fade={false}
-          centered>
+          centered
+        >
           <ModalBody>
             <AuthForm
-              authState={this.state.authState}
+              authState={state.authState}
               onChangeAuthState={this.handleAuthState}
             />
           </ModalBody>

@@ -1,20 +1,16 @@
 import axios from 'axios';
 
 export default {
-  generateApi () {
+  generateApi() {
     const api = axios.create({
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    api.interceptors.response.use(
-      function (response) {
-        return response
+        'Content-Type': 'application/json',
       },
-      function (error) {
-        return Promise.reject(error)
-      }
-    )
-    return api
-  }
-}
+    });
+    api.interceptors.response.use(
+      (response) => response,
+      (error) => Promise.reject(error),
+    );
+    return api;
+  },
+};

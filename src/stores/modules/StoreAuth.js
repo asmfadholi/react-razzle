@@ -1,8 +1,7 @@
-
 import Api from 'services/index';
-import { actionNotification } from './StoreNotification';
 import { NOTIFICATION_OPTIONS } from 'utils/constants';
 import preloadedState from 'utils/preloadedState';
+import { actionNotification } from './StoreNotification';
 
 const pre = 'StoreAuth/';
 
@@ -16,21 +15,21 @@ const initState = {
 
 export default function StoreAuth(state = initState, action) {
   switch (action.type) {
-    case pre + 'SET_AUTH':
+    case `${pre}SET_AUTH`:
       return { ...state, isLogin: action.data };
-    case pre + 'SET_EMAIL_EXISTENCE':
+    case `${pre}SET_EMAIL_EXISTENCE`:
       return { ...state, isEmailExist: action.data };
     default:
-      return state
+      return state;
   }
-};
+}
 
 export const actionAuth = {
   receiveData(res, name) {
     return {
       type: pre + name,
       data: res,
-    }
+    };
   },
   requestLogin(req) {
     return async (dispatch) => {
@@ -38,16 +37,16 @@ export const actionAuth = {
       success.message = 'Logged in successfully';
       error.message = 'email or password is invalid';
       try {
-          dispatch(this.receiveData({ fetch: true, error: false, status: false }, 'SET_AUTH'));
-          await Api.userLogin(req);
-          dispatch(this.receiveData({ fetch: false, error: false, status: true }, 'SET_AUTH'));
-          dispatch(actionNotification.showNotification(success));
+        dispatch(this.receiveData({ fetch: true, error: false, status: false }, 'SET_AUTH'));
+        await Api.userLogin(req);
+        dispatch(this.receiveData({ fetch: false, error: false, status: true }, 'SET_AUTH'));
+        dispatch(actionNotification.showNotification(success));
       } catch (err) {
-          dispatch(this.receiveData({ fetch: false, error: true, status: false }, 'SET_AUTH'));
-          dispatch(actionNotification.showNotification(error));
-          throw err
+        dispatch(this.receiveData({ fetch: false, error: true, status: false }, 'SET_AUTH'));
+        dispatch(actionNotification.showNotification(error));
+        throw err;
       }
-    }
+    };
   },
   requestForgotPassword(req) {
     return async (dispatch) => {
@@ -55,16 +54,16 @@ export const actionAuth = {
       success.message = 'Email is found, please check your email for confirmation';
       error.message = 'Email doesn\'t exist';
       try {
-          dispatch(this.receiveData({ fetch: true, error: false, status: false }, 'SET_EMAIL_EXISTENCE'));
-          await Api.userForgotPassword(req);
-          dispatch(this.receiveData({ fetch: false, error: false, status: true }, 'SET_EMAIL_EXISTENCE'));
-          dispatch(actionNotification.showNotification(success));
+        dispatch(this.receiveData({ fetch: true, error: false, status: false }, 'SET_EMAIL_EXISTENCE'));
+        await Api.userForgotPassword(req);
+        dispatch(this.receiveData({ fetch: false, error: false, status: true }, 'SET_EMAIL_EXISTENCE'));
+        dispatch(actionNotification.showNotification(success));
       } catch (err) {
-          dispatch(this.receiveData({ fetch: false, error: true, status: false }, 'SET_EMAIL_EXISTENCE'));
-          dispatch(actionNotification.showNotification(error));
-          throw err
+        dispatch(this.receiveData({ fetch: false, error: true, status: false }, 'SET_EMAIL_EXISTENCE'));
+        dispatch(actionNotification.showNotification(error));
+        throw err;
       }
-    }
+    };
   },
   requestLogout() {
     return async (dispatch) => {
@@ -72,15 +71,15 @@ export const actionAuth = {
       success.message = 'Logged out successfully';
       error.message = 'Logged out failed';
       try {
-          dispatch(this.receiveData({ fetch: true, error: false, status: true }, 'SET_AUTH'));
-          await Api.userLogout();
-          dispatch(this.receiveData({ fetch: false, error: false, status: false }, 'SET_AUTH'));
-          dispatch(actionNotification.showNotification(success));
+        dispatch(this.receiveData({ fetch: true, error: false, status: true }, 'SET_AUTH'));
+        await Api.userLogout();
+        dispatch(this.receiveData({ fetch: false, error: false, status: false }, 'SET_AUTH'));
+        dispatch(actionNotification.showNotification(success));
       } catch (err) {
-          dispatch(this.receiveData({ fetch: false, error: true, status: true }, 'SET_AUTH'));
-          dispatch(actionNotification.showNotification(error));
-          throw err
+        dispatch(this.receiveData({ fetch: false, error: true, status: true }, 'SET_AUTH'));
+        dispatch(actionNotification.showNotification(error));
+        throw err;
       }
-    }
+    };
   },
 };

@@ -1,41 +1,49 @@
 import logo200Image from 'assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Form, FormGroup, Input, Label, Spinner } from 'reactstrap';
+import {
+  Button, Form, FormGroup, Input, Label, Spinner,
+} from 'reactstrap';
+
+export const STATE_LOGIN = 'LOGIN';
+// export const STATE_SIGNUP = 'SIGNUP';
+export const STATE_FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 
 class AuthForm extends React.Component {
   state = {
     email: 'aa',
-    password: ''
+    password: '',
   }
 
   get isLogin() {
-    return this.props.authState === STATE_LOGIN;
+    const { props } = this;
+    return props.authState === STATE_LOGIN;
   }
 
   get isForgotPassword() {
-    return this.props.authState === STATE_FORGOT_PASSWORD;
+    const { props } = this;
+    return props.authState === STATE_FORGOT_PASSWORD;
   }
 
-  changeAuthState = authState => event => {
+  changeAuthState = (authState) => (event) => {
     event.preventDefault();
+    const { props } = this;
 
-    this.props.onChangeAuthState(authState);
+    props.onChangeAuthState(authState);
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
+    const { props } = this;
+    props.onSubmit(this.state);
   };
 
   onChange = (event, name) => {
     const newValue = event.target.value;
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        [name]: newValue
-      };
-    });
+    this.setState((prevState) => ({
+      ...prevState,
+      [name]: newValue,
+    }));
   }
 
   renderButtonText() {
@@ -59,12 +67,12 @@ class AuthForm extends React.Component {
       usernameInputProps,
       passwordLabel,
       passwordInputProps,
-      confirmPasswordLabel,
-      confirmPasswordInputProps,
+      // confirmPasswordLabel,
+      // confirmPasswordInputProps,
       children,
       onLogoClick,
     } = this.props;
-
+    const { state, props } = this;
     return (
       <Form onSubmit={this.handleSubmit}>
         {showLogo && (
@@ -74,39 +82,42 @@ class AuthForm extends React.Component {
               className="rounded"
               style={{ width: 60, height: 60, cursor: 'pointer' }}
               alt="logo"
+              aria-hidden="true"
               onClick={onLogoClick}
             />
           </div>
         )}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} onChange={(e) => this.onChange(e, 'email')} value={this.state.email} />
+          <Input {...usernameInputProps} onChange={(e) => this.onChange(e, 'email')} value={state.email} />
         </FormGroup>
 
         {this.isLogin && (
           <FormGroup>
             <Label for={passwordLabel}>{passwordLabel}</Label>
-            <Input {...passwordInputProps} onChange={(e) => this.onChange(e, 'password')} value={this.state.password}/>
+            <Input {...passwordInputProps} onChange={(e) => this.onChange(e, 'password')} value={state.password} />
           </FormGroup>
         )}
 
         {this.isLogin && (
           <FormGroup check>
             <Label check>
-              <Input type="checkbox" />{' '}
-                Remember me
+              <Input type="checkbox" />
+              {' '}
+              Remember me
             </Label>
           </FormGroup>
         )}
-        
+
         <hr />
         <Button
           size="lg"
-          disabled={this.props.isFetch}
+          disabled={props.isFetch}
           className="bg-gradient-theme-left border-0"
           block
-          onClick={this.handleSubmit}>
-          { !this.props.isFetch ? this.renderButtonText() : <Spinner /> }
+          onClick={this.handleSubmit}
+        >
+          { !props.isFetch ? this.renderButtonText() : <Spinner /> }
         </Button>
 
         <div className="text-center pt-1">
@@ -116,11 +127,11 @@ class AuthForm extends React.Component {
               <a href="#forgot-password" onClick={this.changeAuthState(STATE_FORGOT_PASSWORD)}>
                 Forgot Password?
               </a>
-            ):(
+            ) : (
               <a href="#login" onClick={this.changeAuthState(STATE_LOGIN)}>
                 Login
               </a>
-            )}            
+            )}
           </h6>
         </div>
         {children}
@@ -128,10 +139,6 @@ class AuthForm extends React.Component {
     );
   }
 }
-
-export const STATE_LOGIN = 'LOGIN';
-// export const STATE_SIGNUP = 'SIGNUP';
-export const STATE_FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 
 AuthForm.propTypes = {
   authState: PropTypes.oneOf([STATE_LOGIN, STATE_FORGOT_PASSWORD]).isRequired,
@@ -146,6 +153,7 @@ AuthForm.propTypes = {
 };
 
 AuthForm.defaultProps = {
+  // eslint-disable-next-line
   authState: 'LOGIN',
   showLogo: true,
   usernameLabel: 'Emaily',

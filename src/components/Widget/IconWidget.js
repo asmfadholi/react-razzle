@@ -3,7 +3,9 @@ import PropTypes from 'utils/propTypes';
 
 import classNames from 'classnames';
 
-import { Card, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
+import {
+  Card, CardBody, CardTitle, CardSubtitle,
+} from 'reactstrap';
 
 const IconWidget = ({
   bgColor,

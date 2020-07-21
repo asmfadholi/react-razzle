@@ -25,6 +25,7 @@ class BubbleMap extends Component {
     // const primaryColor = getColor('primary');
     const secondaryColor = getColor('secondary');
     const lightColor = getColor('light');
+    const { state } = this;
 
     return (
       <ComposableMap
@@ -38,41 +39,38 @@ class BubbleMap extends Component {
       >
         <ZoomableGroup center={[0, 20]} disablePanning>
           <Geographies geography={world50m}>
-            {(geographies, projection) =>
-              geographies.map(
-                (geography, i) =>
-                  geography.id !== 'ATA' && (
-                    <Geography
-                      key={i}
-                      geography={geography}
-                      projection={projection}
-                      style={{
-                        default: {
-                          fill: lightColor,
-                          stroke: lightColor,
-                          strokeWidth: 0.75,
-                          outline: 'none',
-                        },
-                        hover: {
-                          fill: secondaryColor,
-                          stroke: secondaryColor,
-                          strokeWidth: 0.75,
-                          outline: 'none',
-                        },
-                        pressed: {
-                          fill: secondaryColor,
-                          stroke: secondaryColor,
-                          strokeWidth: 0.75,
-                          outline: 'none',
-                        },
-                      }}
-                    />
-                  ),
-              )
-            }
+            {(geographies, projection) => geographies.map(
+              (geography, i) => geography.id !== 'ATA' && (
+                <Geography
+                  key={i}
+                  geography={geography}
+                  projection={projection}
+                  style={{
+                    default: {
+                      fill: lightColor,
+                      stroke: lightColor,
+                      strokeWidth: 0.75,
+                      outline: 'none',
+                    },
+                    hover: {
+                      fill: secondaryColor,
+                      stroke: secondaryColor,
+                      strokeWidth: 0.75,
+                      outline: 'none',
+                    },
+                    pressed: {
+                      fill: secondaryColor,
+                      stroke: secondaryColor,
+                      strokeWidth: 0.75,
+                      outline: 'none',
+                    },
+                  }}
+                />
+              ),
+            )}
           </Geographies>
           <Markers>
-            {this.state.cities.map((city, i) => (
+            {state.cities.map((city, i) => (
               <Marker key={i} marker={city}>
                 <circle
                   cx={0}

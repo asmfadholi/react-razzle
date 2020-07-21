@@ -57,22 +57,25 @@ class Header extends React.Component {
   };
 
   toggleNotificationPopover = () => {
-    this.setState({
-      isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
-    });
+    const { isNotificationConfirmed } = this.state;
+    this.setState((prevState) => ({
+      ...prevState,
+      isOpenNotificationPopover: !prevState.isOpenNotificationPopover,
+    }));
 
-    if (!this.state.isNotificationConfirmed) {
+    if (!isNotificationConfirmed) {
       this.setState({ isNotificationConfirmed: true });
     }
   };
 
   toggleUserCardPopover = () => {
-    this.setState({
-      isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
-    });
+    this.setState((prevState) => ({
+      ...prevState,
+      iisOpenUserCardPopover: !prevState.isOpenUserCardPopover,
+    }));
   };
 
-  handleSidebarControlButton = event => {
+  handleSidebarControlButton = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -80,7 +83,11 @@ class Header extends React.Component {
   };
 
   render() {
-    const { isNotificationConfirmed } = this.state;
+    const {
+      isNotificationConfirmed,
+      isOpenNotificationPopover,
+      isOpenUserCardPopover,
+    } = this.state;
     return (
       <Navbar light expand className={bem.b('bg-white')}>
         <Nav navbar className="mr-2">
@@ -111,7 +118,7 @@ class Header extends React.Component {
             </BSNavLink>
             <Popover
               placement="bottom"
-              isOpen={this.state.isOpenNotificationPopover}
+              isOpen={isOpenNotificationPopover}
               toggle={this.toggleNotificationPopover}
               target="Popover1"
             >
@@ -130,7 +137,7 @@ class Header extends React.Component {
             </BSNavLink>
             <Popover
               placement="bottom-end"
-              isOpen={this.state.isOpenUserCardPopover}
+              isOpen={isOpenUserCardPopover}
               toggle={this.toggleUserCardPopover}
               target="Popover2"
               className="p-0 border-0"
@@ -144,26 +151,38 @@ class Header extends React.Component {
                   className="border-light"
                 >
                   <ListGroup flush>
-                    
+
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdPersonPin /> Profile
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
+                      <MdPersonPin />
+                      {' '}
+                      Profile
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdSettingsApplications /> Settings
+                      <MdInsertChart />
+                      {' '}
+                      Stats
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
+                      <MdMessage />
+                      {' '}
+                      Messages
                     </ListGroupItem>
-                    <ListGroupItem tag={NavLink} to='/logout' action className="border-light">
-                      <MdExitToApp /> Signout
+                    <ListGroupItem tag="button" action className="border-light">
+                      <MdSettingsApplications />
+                      {' '}
+                      Settings
                     </ListGroupItem>
-                
+                    <ListGroupItem tag="button" action className="border-light">
+                      <MdHelp />
+                      {' '}
+                      Help
+                    </ListGroupItem>
+                    <ListGroupItem tag={NavLink} to="/logout" action className="border-light">
+                      <MdExitToApp />
+                      {' '}
+                      Signout
+                    </ListGroupItem>
+
                   </ListGroup>
                 </UserCard>
               </PopoverBody>

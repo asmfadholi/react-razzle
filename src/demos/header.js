@@ -4,6 +4,7 @@ import user3Image from 'assets/img/users/100_3.jpg';
 import user4Image from 'assets/img/users/100_4.jpg';
 import user5Image from 'assets/img/users/100_5.jpg';
 
+// eslint-disable-next-line
 export const notificationsData = [
   {
     id: 1,

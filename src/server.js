@@ -1,13 +1,13 @@
-require('dotenv').config();
-
-import App from './App';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
-import store from './stores/index';
 import { Provider } from 'react-redux';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { renderToString } from 'react-dom/server';
+import store from './stores/index';
+import App from './App';
+
+require('dotenv').config();
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 const session = require('express-session');
@@ -21,27 +21,27 @@ server.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false, httpOnly: true }
-}))
+  cookie: { secure: false, httpOnly: true },
+}));
 
-server.post('/user/login', ({session}, res) => {
+server.post('/user/login', ({ session }, res) => {
   session.token = true;
   setTimeout(() => {
     res.status(200).send({ error: false });
-  }, 1500)
-})
+  }, 1500);
+});
 
 server.post('/user/forgot-password', ({}, res) => {
   // session.token = true;
   setTimeout(() => {
     res.status(200).send({ error: false });
-  }, 1500)
-})
+  }, 1500);
+});
 
-server.get('/user/logout', ({session}, res) => {
+server.get('/user/logout', ({ session }, res) => {
   session.token = undefined;
   res.status(200).send({ error: false });
-})
+});
 
 server
   .disable('x-powered-by')
@@ -58,16 +58,16 @@ server
     }
 
     console.log(store.getState(), req.session);
-    
+
     const markup = renderToString(
       <Provider store={store}>
         <StaticRouter context={context} location={req.url}>
           <App />
         </StaticRouter>
-      </Provider>
+      </Provider>,
     );
 
-    const preloadedState = store.getState()
+    const preloadedState = store.getState();
 
     if (context.url) {
       res.redirect(context.url);
@@ -82,15 +82,15 @@ server
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="This is an example of a meta description. This will often show up in search results."></head>
         ${
-          assets.client.css
-            ? `<link rel="stylesheet" href="${assets.client.css}">`
-            : ''
-        }
+  assets.client.css
+    ? `<link rel="stylesheet" href="${assets.client.css}">`
+    : ''
+}
         ${
-          process.env.NODE_ENV === 'production'
-            ? `<script src="${assets.client.js}" defer></script>`
-            : `<script src="${assets.client.js}" defer crossorigin></script>`
-        }
+  process.env.NODE_ENV === 'production'
+    ? `<script src="${assets.client.js}" defer></script>`
+    : `<script src="${assets.client.js}" defer crossorigin></script>`
+}
     </head>
     <body>
         <div id="root">${markup}</div>
@@ -98,12 +98,12 @@ server
           // WARNING: See the following for security issues around embedding JSON in HTML:
           // https://redux.js.org/recipes/server-rendering/#security-considerations
           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
-            /</g,
-            '\\u003c'
-          )}
+    /</g,
+    '\\u003c',
+  )}
         </script>
     </body>
-</html>`
+</html>`,
       );
     }
   });

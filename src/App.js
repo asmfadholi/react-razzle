@@ -35,71 +35,70 @@ const AuthenticatedRoute = React.lazy(() => import('./middleware/AuthenticatedRo
 const UnauthenticatedRoute = React.lazy(() => import('./middleware/UnauthenticatedRoute'));
 
 class App extends React.Component {
-
   componentDidUpdate(prevProps) {
     this.isShowNotification(prevProps);
-    if (!this.notificationSystem) {
-      return;
-    }
   }
+
   isShowNotification = (prevProps) => {
     if (!this.notificationSystem) {
       return;
     }
-
-    if (prevProps.StoreNotification.toggle !== this.props.StoreNotification.toggle) {
-      this.notificationSystem.addNotification(this.props.StoreNotification);
+    const { props } = this;
+    if (prevProps.StoreNotification.toggle !== props.StoreNotification.toggle) {
+      this.notificationSystem.addNotification(props.StoreNotification);
     }
   }
+
   render() {
-    const Layout = this.props.isAuthenticated ? MainLayout : EmptyLayout;
+    const { props } = this;
+    const Layout = props.isAuthenticated ? MainLayout : EmptyLayout;
     return (
       <>
-        <Switch> 
-          <Layout breakpoint={this.props.breakpoint}>
+        <Switch>
+          <Layout breakpoint={props.breakpoint}>
             <React.Suspense fallback={<PageSpinner />}>
               <AuthenticatedRoute
                 exact
                 path="/"
-                component={ DashboardPage }
+                component={DashboardPage}
                 appProps={{
-                  isAuthenticated: this.props.isAuthenticated
+                  isAuthenticated: props.isAuthenticated,
                 }}
               />
               <AuthenticatedRoute
                 exact
                 path="/logout"
-                component={ BlankPage }
+                component={BlankPage}
                 appProps={{
-                  isAuthenticated: this.props.isAuthenticated
+                  isAuthenticated: props.isAuthenticated,
                 }}
               />
               <UnauthenticatedRoute
                 exact
                 path="/login"
-                component={ AuthPage }
-                authState={ STATE_LOGIN }
+                component={AuthPage}
+                authState={STATE_LOGIN}
                 appProps={{
-                  isAuthenticated: this.props.isAuthenticated
+                  isAuthenticated: props.isAuthenticated,
                 }}
               />
 
               <UnauthenticatedRoute
                 exact
                 path="/forgot-password"
-                component={ AuthPage }
-                authState={ STATE_FORGOT_PASSWORD }
+                component={AuthPage}
+                authState={STATE_FORGOT_PASSWORD}
                 appProps={{
-                  isAuthenticated: this.props.isAuthenticated
+                  isAuthenticated: props.isAuthenticated,
                 }}
               />
 
               <AuthenticatedRoute
                 exact
                 path="/org-chart"
-                component={ OrgChartPage }
+                component={OrgChartPage}
                 appProps={{
-                  isAuthenticated: this.props.isAuthenticated
+                  isAuthenticated: props.isAuthenticated,
                 }}
               />
               { /* <Route exact path="/" component={ () => <DashboardPage /> } /> */ }
@@ -125,13 +124,12 @@ class App extends React.Component {
             </React.Suspense>
           </Layout>
           <Redirect to="/" />
-          
+
         </Switch>
         <NotificationSystem
           dismissible={false}
-          ref={notificationSystem =>
-            (this.notificationSystem = notificationSystem)
-          }
+          { /* eslint-disable-next-line */ }
+          ref={(notificationSystem) => (this.notificationSystem = notificationSystem)}
           style={NOTIFICATION_SYSTEM_STYLE}
         />
       </>
@@ -148,15 +146,15 @@ const query = ({ width }) => {
     return { breakpoint: 'xs' };
   }
 
-  if (576 < width && width < 767) {
+  if (width > 576 && width < 767) {
     return { breakpoint: 'sm' };
   }
 
-  if (768 < width && width < 991) {
+  if (width > 768 && width < 991) {
     return { breakpoint: 'md' };
   }
 
-  if (992 < width && width < 1199) {
+  if (width > 992 && width < 1199) {
     return { breakpoint: 'lg' };
   }
 
@@ -167,15 +165,11 @@ const query = ({ width }) => {
   return { breakpoint: 'xs' };
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: state.StoreAuth.isLogin.status,
-    StoreNotification: state.StoreNotification.detail,
-  };
-}
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.StoreAuth.isLogin.status,
+  StoreNotification: state.StoreNotification.detail,
+});
 
-const mapDispatchToProps = () => {
-  return {};
-}
+const mapDispatchToProps = () => ({});
 
 export default componentQueries(query)(connect(mapStateToProps, mapDispatchToProps)(App));

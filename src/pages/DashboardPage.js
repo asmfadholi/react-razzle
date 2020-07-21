@@ -45,10 +45,10 @@ import {
 import { getColor } from 'utils/colors';
 import { connect } from 'react-redux';
 import { actionNotification } from 'stores/index';
-import { fetchProfileData } from "./fakeApi";
-import { NOTIFICATION_OPTIONS } from 'utils/constants';
+// import { NOTIFICATION_OPTIONS } from 'utils/constants';
+// import { fetchProfileData } from './fakeApi';
 
-const resource = fetchProfileData();
+// const resource = fetchProfileData();
 
 const today = new Date();
 const lastWeek = new Date(
@@ -61,7 +61,7 @@ class DashboardPage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
-    
+
     // setTimeout(() => {
     //   if (!this.notificationSystem) {
     //     return;
@@ -79,11 +79,11 @@ class DashboardPage extends React.Component {
     //   });
     // }, 2500);
   }
-  
+
   render() {
     const primaryColor = getColor('primary');
     const secondaryColor = getColor('secondary');
-    const user = resource.user.read();
+    // const user = resource.user.read();
     return (
       <Page
         className="DashboardPage"
@@ -147,7 +147,8 @@ class DashboardPage extends React.Component {
           <Col lg="8" md="12" sm="12" xs="12">
             <Card>
               <CardHeader>
-                Total Revenue{' '}
+                Total Revenue
+                {' '}
                 <small className="text-muted text-capitalize">This year</small>
               </CardHeader>
               <CardBody>
@@ -164,20 +165,34 @@ class DashboardPage extends React.Component {
               </CardBody>
               <ListGroup flush>
                 <ListGroupItem>
-                  <MdInsertChart size={25} color={primaryColor} /> Cost of sales{' '}
+                  <MdInsertChart size={25} color={primaryColor} />
+                  {' '}
+                  Cost of sales
+                  {' '}
                   <Badge color="secondary">$3000</Badge>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <MdBubbleChart size={25} color={primaryColor} /> Management
-                  costs <Badge color="secondary">$1200</Badge>
+                  <MdBubbleChart size={25} color={primaryColor} />
+                  {' '}
+                  Management
+                  costs
+                  {' '}
+                  <Badge color="secondary">$1200</Badge>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <MdShowChart size={25} color={primaryColor} /> Financial costs{' '}
+                  <MdShowChart size={25} color={primaryColor} />
+                  {' '}
+                  Financial costs
+                  {' '}
                   <Badge color="secondary">$800</Badge>
                 </ListGroupItem>
                 <ListGroupItem>
-                  <MdPieChart size={25} color={primaryColor} /> Other operating
-                  costs <Badge color="secondary">$2400</Badge>
+                  <MdPieChart size={25} color={primaryColor} />
+                  {' '}
+                  Other operating
+                  costs
+                  {' '}
+                  <Badge color="secondary">$2400</Badge>
                 </ListGroupItem>
               </ListGroup>
             </Card>
@@ -214,7 +229,9 @@ class DashboardPage extends React.Component {
               <CardHeader>New Products</CardHeader>
               <CardBody>
                 {productsData.map(
-                  ({ id, image, title, description, right }) => (
+                  ({
+                    id, image, title, description, right,
+                  }) => (
                     <ProductMedia
                       key={id}
                       image={image}
@@ -270,7 +287,9 @@ class DashboardPage extends React.Component {
                 style={{ position: 'absolute' }}
               >
                 <CardTitle>
-                  <MdInsertChart /> Sales
+                  <MdInsertChart />
+                  {' '}
+                  Sales
                 </CardTitle>
               </CardBody>
             </Card>
@@ -298,7 +317,9 @@ class DashboardPage extends React.Component {
                 style={{ position: 'absolute' }}
               >
                 <CardTitle>
-                  <MdInsertChart /> Revenue
+                  <MdInsertChart />
+                  {' '}
+                  Revenue
                 </CardTitle>
               </CardBody>
             </Card>
@@ -325,7 +346,9 @@ class DashboardPage extends React.Component {
                 style={{ position: 'absolute', right: 0 }}
               >
                 <CardTitle>
-                  <MdInsertChart /> Profit
+                  <MdInsertChart />
+                  {' '}
+                  Profit
                 </CardTitle>
               </CardBody>
             </Card>
@@ -370,14 +393,24 @@ class DashboardPage extends React.Component {
         </Row>
 
         <CardDeck style={{ marginBottom: '1rem' }}>
-          <Card body style={{ overflowX: 'auto','paddingBottom':'15px','height': 'fit-content','paddingTop': 'inherit'}}>
+          <Card
+            body
+            style={{
+              overflowX: 'auto', paddingBottom: '15px', height: 'fit-content', paddingTop: 'inherit',
+            }}
+          >
             <HorizontalAvatarList
               avatars={avatarsData}
               avatarProps={{ size: 50 }}
             />
           </Card>
 
-          <Card body style={{ overflowX: 'auto','paddingBottom':'15px','height': 'fit-content','paddingTop': 'inherit'}}>
+          <Card
+            body
+            style={{
+              overflowX: 'auto', paddingBottom: '15px', height: 'fit-content', paddingTop: 'inherit',
+            }}
+          >
             <HorizontalAvatarList
               avatars={avatarsData}
               avatarProps={{ size: 50 }}
@@ -413,7 +446,7 @@ class DashboardPage extends React.Component {
                 </div>
               </CardHeader>
               <CardBody>
-                {supportTicketsData.map(supportTicket => (
+                {supportTicketsData.map((supportTicket) => (
                   <SupportTicket key={supportTicket.id} {...supportTicket} />
                 ))}
               </CardBody>
@@ -429,14 +462,10 @@ class DashboardPage extends React.Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {};
-}
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = (dispatch) => {
-  return { 
-    showNotification: (req) => dispatch(actionNotification.showNotification(req)),
-  };
-}
+const mapDispatchToProps = (dispatch) => ({
+  showNotification: (req) => dispatch(actionNotification.showNotification(req)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

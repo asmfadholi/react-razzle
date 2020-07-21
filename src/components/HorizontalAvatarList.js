@@ -15,8 +15,8 @@ const HorizontalAvatarList = ({
 
   return (
     <Tag className="d-flex align-items-center" {...restProps}>
-      {avatars &&
-        avatars.map(({ avatar, name }, i) => {
+      {avatars
+        && avatars.map(({ avatar, name }, i) => {
           const index = count();
           const isFirstItem = i === 0;
 
@@ -31,14 +31,15 @@ const HorizontalAvatarList = ({
                   border: '3px solid #fff',
                   marginLeft: !isFirstItem && -20,
                   marginBottom: '20px',
-                  marginTop:'20px'
+                  marginTop: '20px',
                 }}
               />
 
               {!!name && (
                 <UncontrolledTooltip
                   delay={{ show: 0, hide: 0 }}
-                  target={`HorizontalAvatarList-avatar-${index}`}>
+                  target={`HorizontalAvatarList-avatar-${index}`}
+                >
                   {name}
                 </UncontrolledTooltip>
               )}
@@ -55,7 +56,7 @@ HorizontalAvatarList.propTypes = {
     PropTypes.shape({
       avatar: PropTypes.string.isRequired,
       name: PropTypes.string,
-    })
+    }),
   ).isRequired,
   avatarProps: PropTypes.object,
   reversed: PropTypes.bool,
@@ -63,6 +64,7 @@ HorizontalAvatarList.propTypes = {
 
 HorizontalAvatarList.defaultProps = {
   tag: 'div',
+  // eslint-disable-next-line
   avatars: [],
   avatarProps: {},
   reversed: false,

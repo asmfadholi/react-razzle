@@ -5,12 +5,12 @@ export default function UnauthenticatedRoute({ component: C, appProps, ...rest }
   return (
     <Route
       {...rest}
-      render={props => {
+      render={(props) => {
         const search = props.location.search ? props.location.search.split('/')[1] : '';
         return !appProps.isAuthenticated
-        ? <C {...props} {...appProps} {...rest} />
-        : <Redirect to={`/${search}`} />}
-      }  
+          ? <C {...props} {...appProps} {...rest} />
+          : <Redirect to={`/${search}`} />;
+      }}
     />
   );
-};
+}

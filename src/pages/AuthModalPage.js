@@ -19,12 +19,13 @@ class AuthModalPage extends React.Component {
   };
 
   toggle = () => {
-    this.setState({
-      show: !this.state.show,
-    });
+    this.setState((prevState) => ({
+      ...prevState,
+      show: !prevState.show,
+    }));
   };
 
-  handleAuthState = authState => {
+  handleAuthState = (authState) => {
     this.setState({
       authState,
     });
@@ -40,15 +41,20 @@ class AuthModalPage extends React.Component {
           right: '20px',
           fontSize: '3rem',
         }}
-        onClick={this.toggle}>
+        type="button"
+        onClick={this.toggle}
+      >
         &times;
       </button>
     );
 
+    const { state } = this;
+
     return (
       <Page
         title="Login Modal"
-        breadcrumbs={[{ name: 'login modal', active: true }]}>
+        breadcrumbs={[{ name: 'login modal', active: true }]}
+      >
         <Row>
           <Col md="12" sm="12" xs="12">
             <Card>
@@ -58,16 +64,17 @@ class AuthModalPage extends React.Component {
                   Click to Login
                 </Button>
                 <Modal
-                  isOpen={this.state.show}
+                  isOpen={state.show}
                   toggle={this.toggle}
                   size="sm"
                   backdrop="static"
                   backdropClassName="modal-backdrop-light"
                   external={externalCloseBtn}
-                  centered>
+                  centered
+                >
                   <ModalBody>
                     <AuthForm
-                      authState={this.state.authState}
+                      authState={state.authState}
                       onChangeAuthState={this.handleAuthState}
                     />
                   </ModalBody>

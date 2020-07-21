@@ -1,5 +1,4 @@
 import random from 'faker/lib/random';
 
-export const randomNum = (min = 0, max = 1000) => {
-  return random().number({ min, max });
-};
+// eslint-disable-next-line
+export const randomNum = (min = 0, max = 1000) => random().number({ min, max });

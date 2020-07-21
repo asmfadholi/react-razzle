@@ -1,4 +1,6 @@
-import { Content, Footer, Header, Sidebar } from 'components/Layout';
+import {
+  Content, Footer, Header, Sidebar,
+} from 'components/Layout';
 import React from 'react';
 // import {
 //   MdImportantDevices,
@@ -16,12 +18,6 @@ class MainLayout extends React.Component {
       .classList.contains('cr-sidebar--open');
   }
 
-  componentWillReceiveProps({ breakpoint }) {
-    if (breakpoint !== this.props.breakpoint) {
-      this.checkBreakpoint(breakpoint);
-    }
-  }
-
   // componentDidUpdate(prevProps) {
   //   this.isShowNotification(prevProps);
   //   if (!this.notificationSystem) {
@@ -30,7 +26,16 @@ class MainLayout extends React.Component {
   // }
 
   componentDidMount() {
-    this.checkBreakpoint(this.props.breakpoint);
+    const { breakpoint } = this.props;
+    this.checkBreakpoint(breakpoint);
+  }
+
+  // eslint-disable-next-line
+  componentWillReceiveProps({ breakpoint }) {
+    const { props } = this;
+    if (breakpoint !== props.breakpoint) {
+      this.checkBreakpoint(breakpoint);
+    }
   }
 
   // isShowNotification = (prevProps) => {
@@ -44,19 +49,20 @@ class MainLayout extends React.Component {
   // }
 
   // close sidebar when
-  handleContentClick = event => {
+  handleContentClick = () => {
     // close sidebar if sidebar is open and screen size is less than `md`
+    const { props } = this;
     if (
-      MainLayout.isSidebarOpen() &&
-      (this.props.breakpoint === 'xs' ||
-        this.props.breakpoint === 'sm' ||
-        this.props.breakpoint === 'md')
+      MainLayout.isSidebarOpen()
+      && (props.breakpoint === 'xs'
+        || props.breakpoint === 'sm'
+        || props.breakpoint === 'md')
     ) {
       this.openSidebar('close');
     }
   };
 
-  checkBreakpoint(breakpoint) {
+  checkBreakpoint = (breakpoint) => {
     switch (breakpoint) {
       case 'xs':
       case 'sm':
@@ -68,15 +74,16 @@ class MainLayout extends React.Component {
       default:
         return this.openSidebar('open');
     }
-  }
+  };
 
-  openSidebar(openOrClose) {
+  openSidebar = (openOrClose) => {
     if (openOrClose === 'open') {
       return document
         .querySelector('.cr-sidebar')
         .classList.add('cr-sidebar--open');
     }
     document.querySelector('.cr-sidebar').classList.remove('cr-sidebar--open');
+    return null;
   }
 
   render() {
@@ -90,7 +97,7 @@ class MainLayout extends React.Component {
           <Footer />
         </Content>
 
-        { /*<NotificationSystem
+        { /* <NotificationSystem
           dismissible={false}
           ref={notificationSystem =>
             (this.notificationSystem = notificationSystem)
