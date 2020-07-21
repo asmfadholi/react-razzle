@@ -71,7 +71,7 @@ class Header extends React.Component {
   toggleUserCardPopover = () => {
     this.setState((prevState) => ({
       ...prevState,
-      iisOpenUserCardPopover: !prevState.isOpenUserCardPopover,
+      isOpenUserCardPopover: !prevState.isOpenUserCardPopover,
     }));
   };
 
