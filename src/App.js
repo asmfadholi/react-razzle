@@ -128,7 +128,7 @@ class App extends React.Component {
         </Switch>
         <NotificationSystem
           dismissible={false}
-          { /* eslint-disable-next-line */ }
+          // eslint-disable-next-line
           ref={(notificationSystem) => (this.notificationSystem = notificationSystem)}
           style={NOTIFICATION_SYSTEM_STYLE}
         />

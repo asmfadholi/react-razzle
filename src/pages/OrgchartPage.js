@@ -193,6 +193,7 @@ class OrgchartPage extends React.Component {
       // eslint-disable-next-line
       tree, downloadingChart, modal_parent, modal_nested, modeData,
     } = this.state;
+    const { props, state } = this;
     // const yes = false;
     // For downloading org chart as image or pdf based on id
     const downloadImageId = 'download-image';
@@ -255,10 +256,10 @@ class OrgchartPage extends React.Component {
         ) }
 
         <Modal
-          {/* eslint-disable-next-line */}
+          // eslint-disable-next-line
           isOpen={modal_parent}
           toggle={this.toggle('parent')}
-          className={this.props.className}
+          className={props.className}
         >
           <ModalHeader toggle={this.toggle('parent')}>Detail profile</ModalHeader>
           <ModalBody>
@@ -269,7 +270,7 @@ class OrgchartPage extends React.Component {
                   type="text"
                   name="email"
                   onChange={(e) => this.onChange(e, 'name')}
-                  value={this.state.currentData.person.name}
+                  value={state.currentData.person.name}
                   placeholder="Name"
                 />
               </FormGroup>
@@ -279,13 +280,14 @@ class OrgchartPage extends React.Component {
                   type="text"
                   name="title"
                   onChange={(e) => this.onChange(e, 'title')}
-                  value={this.state.currentData.person.title}
+                  value={state.currentData.person.title}
                   placeholder="Jabatan"
                 />
               </FormGroup>
             </Form>
 
             <Modal
+              // eslint-disable-next-line
               isOpen={modal_nested}
               toggle={this.toggle('nested')}
             >
@@ -313,7 +315,7 @@ class OrgchartPage extends React.Component {
           </ModalBody>
           <ModalFooter>
 
-            { this.state.temporaryData.hasParent && (
+            { state.temporaryData.hasParent && (
             <Button color="danger" onClick={this.confirmAction('Delete')}>
               Delete
             </Button>
