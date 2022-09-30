@@ -16,7 +16,7 @@
     "chart.js": "2.7.2",
     "classnames": "^2.2.6",
     "d3-geo": "^1.11.3",
-    "d3-scale": "^3.2.1",
+    "d3-scale": "^4.0.2",
     "dotenv": "^8.2.0",
     "express": "4.17.1",
     "express-session": "^1.17.1",
@@ -41,7 +41,7 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "victory": "^32.0.0"
+    "victory": "^36.6.8"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
